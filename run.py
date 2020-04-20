@@ -1,3 +1,4 @@
+import os
 import time
 import json
 import requests
@@ -6,7 +7,18 @@ import jobiili
 import fixtures
 
 
-client = jobiili.Client("", "")  # TODO: set credentials
+USERNAME = os.environ.get("USERNAME")
+PASSWORD = os.environ.get("PASSWORD")
+
+if not USERNAME:
+    print("USERNAME not defined")
+    exit(1)
+
+if not PASSWORD:
+    print("PASSWORD not defined")
+    exit(1)
+
+client = jobiili.Client(USERNAME, PASSWORD)
 
 
 def poll_jobs():

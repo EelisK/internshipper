@@ -1,6 +1,11 @@
 #!/bin/bash
 
-python run.py
-if [ $? -eq 123 ]; then
+read -p 'Username: ' uservar
+read -sp 'Password: ' passvar
+echo ""
+
+USERNAME=$uservar PASSWORD=$passvar python run.py
+EXIT_CODE=$?
+if [ $EXIT_CODE -eq 123 ]; then
     bin/crash_notify
 fi

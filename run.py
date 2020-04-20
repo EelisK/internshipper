@@ -38,9 +38,6 @@ def poll_jobs():
         logging.error("Read time-out occurred")
     except requests.exceptions.BaseHTTPError as e:
         logging.error("Http error: " + str(e))
-    except Exception as e:
-        logging.error(e)
-        exit(123)
 
 
 def filter_eligible_jobs(jobs):
@@ -77,5 +74,11 @@ def handle_new_job(job):
 
 if __name__ == "__main__":
     while True:
-        poll_jobs()
-        time.sleep(fixtures.POLLING_INTERVAL)
+        try:
+            poll_jobs()
+            time.sleep(fixtures.POLLING_INTERVAL)
+        except KeyboardInterrupt:
+            exit(0)
+        except Exception as e:
+            logging.error(e)
+            exit(123)

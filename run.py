@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import json
 import requests
@@ -11,7 +12,7 @@ USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 
 if not USERNAME:
-    print("USERNAME not defined")
+    print("USERNAME not defined", file=sys.stderr)
     exit(1)
 
 if not PASSWORD:
@@ -29,11 +30,12 @@ def poll_jobs():
         [handle_new_job(job) for job in get_new_jobs(prev_jobs, curr_jobs)]
         update_job_list(curr_jobs)
         print("{} Poll complete".format(datetime.datetime.utcnow()))
-    except jobiili.AuthenticationException:
+    except (jobiili.AuthenticationException, requests.exceptions.ConnectionError):
+        print("Exception occurred\nAttempting re-login")
         client.login()
         poll_jobs()
     except Exception as e:
-        print(e)
+        print(e, file=sys.stderr)
         exit(123)
 
 

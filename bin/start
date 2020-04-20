@@ -1,0 +1,6 @@
+#!/bin/bash
+
+python run.py
+if [ $? -eq 123 ]; then
+    bin/crash_notify
+fi

@@ -1,7 +1,7 @@
 import os
-import sys
 import time
 import json
+import logging
 import requests
 import datetime
 import jobiili
@@ -12,11 +12,11 @@ USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 
 if not USERNAME:
-    print("USERNAME not defined", file=sys.stderr)
+    logging.error("USERNAME not defined")
     exit(1)
 
 if not PASSWORD:
-    print("PASSWORD not defined")
+    logging.error("PASSWORD not defined")
     exit(1)
 
 client = jobiili.Client(USERNAME, PASSWORD)
@@ -31,11 +31,13 @@ def poll_jobs():
         update_job_list(curr_jobs)
         print("{} Poll complete".format(datetime.datetime.utcnow()))
     except (jobiili.AuthenticationException, requests.exceptions.ConnectionError):
-        print("Exception occurred\nAttempting re-login")
+        logging.info("Exception occurred\nAttempting re-login")
         client.login()
         poll_jobs()
+    except requests.exceptions.ReadTimeout:
+        logging.error("Read time-out occurred")
     except Exception as e:
-        print(e, file=sys.stderr)
+        logging.error(e)
         exit(123)
 
 

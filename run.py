@@ -36,6 +36,8 @@ def poll_jobs():
         poll_jobs()
     except requests.exceptions.ReadTimeout:
         logging.error("Read time-out occurred")
+    except requests.exceptions.BaseHTTPError as e:
+        logging.error("Http error: " + str(e))
     except Exception as e:
         logging.error(e)
         exit(123)

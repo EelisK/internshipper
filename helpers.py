@@ -14,9 +14,9 @@ def poll_jobs(client, filters, options):
         prev_jobs = get_old_jobs()
         [handle_new_job(job) for job in get_new_jobs(prev_jobs, curr_jobs)]
         update_job_list(curr_jobs)
-        logging.info("{} Poll complete".format(datetime.datetime.utcnow()))
+        print("{} Poll complete".format(datetime.datetime.utcnow()))
     except requests.exceptions.ConnectionError:
-        logging.info("Exception occurred. Attempting re-login")
+        logging.warn("Exception occurred. Attempting re-login")
         client.login()
         poll_jobs(client, filters, options)
     except requests.exceptions.ReadTimeout:

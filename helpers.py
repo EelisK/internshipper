@@ -7,10 +7,10 @@ import json
 from jsonschema import Draft4Validator, validators
 
 
-def poll_jobs(client, filters):
+def poll_jobs(client, filters, options):
     try:
         jobs = client.get_jobs(filters)
-        curr_jobs = filter_eligible_jobs(jobs)
+        curr_jobs = apply_additional_filters(jobs, options)
         prev_jobs = get_old_jobs()
         [handle_new_job(job) for job in get_new_jobs(prev_jobs, curr_jobs)]
         update_job_list(curr_jobs)
@@ -18,16 +18,18 @@ def poll_jobs(client, filters):
     except requests.exceptions.ConnectionError:
         logging.info("Exception occurred. Attempting re-login")
         client.login()
-        poll_jobs(client, filters)
+        poll_jobs(client, filters, options)
     except requests.exceptions.ReadTimeout:
         logging.error("Read time-out occurred")
     except requests.exceptions.BaseHTTPError as e:
         logging.error("Http error: " + str(e))
 
 
-def filter_eligible_jobs(jobs):
-    return list(filter(
-        lambda job: not job["advancedStudentsOnly"], jobs))
+def apply_additional_filters(jobs, options):
+    if options.get("exclude_advanced_students"):
+        return list(filter(
+            lambda job: not job["advancedStudentsOnly"], jobs))
+    return jobs
 
 
 def get_old_jobs():

@@ -27,7 +27,9 @@ if __name__ == "__main__":
     request_filter = helpers.format_request(args.request)
     while True:
         try:
-            helpers.poll_jobs(client, args.request)
+            helpers.poll_jobs(client, args.request, {
+                "exclude_advanced_students": args.exclude_advanced_students
+            })
             time.sleep(args.interval)
         except KeyboardInterrupt:
             exit(0)

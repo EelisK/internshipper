@@ -1,0 +1,115 @@
+{
+  "title": "JSON schema for Jobiili job query filters",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "type": "object",
+  "required": ["startDate", "endDate", "jobClasses", "jobTargetDegrees"],
+
+  "properties": {
+    "startDate": {
+      "description": "The starting date of your internship in UTC",
+      "type": "string"
+    },
+    "endTime": {
+      "description": "The end date of your internship in UTC.",
+      "type": "string"
+    },
+    "jobClasses": {
+      "description": "Internship position types as a Jobiili integer enum.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "jobTargetDegrees": {
+      "description": "The pursued degree as a Jobiili integer enum.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "languages": {
+      "description": "Desired languages used in the position",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "name_en", "name_sv"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "name_en": {
+            "type": "string"
+          },
+          "name_sv": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "minLength": {
+      "type": "integer",
+      "description": "Minimum length of the internship"
+    },
+    "isOpenUni": {
+      "type": "boolean",
+      "description": "Suitable for students from open university."
+    },
+    "onlyFreeWeeks": {
+      "type": "boolean",
+      "description": "Only show places that are reservable."
+    },
+    "municipalities": {
+      "description": "The municipalities the internship shall take position in",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "publicationDate"
+    },
+    "organization": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "page": {
+      "type": "integer",
+      "default": 1
+    },
+    "regions": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": true
+    },
+    "tags": {
+      "type": "array",
+      "default": [],
+      "description": "Unknown array applied to each request."
+    },
+    "types": {
+      "type": "array",
+      "description": "Unknown array applied to each request."
+    },
+    "company": {
+      "type": "integer",
+      "description": "Company id from Jobiili."
+    },
+    "branch": {
+      "type": "integer",
+      "description": "Branch from the company above."
+    }
+  }
+}

@@ -12,6 +12,7 @@ rope = "*"
 requests = "*"
 bs4 = "*"
 lxml = "*"
+jsonschema = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8.2"

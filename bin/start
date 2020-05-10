@@ -4,12 +4,10 @@ read -p 'Username: ' uservar
 read -sp 'Password: ' passvar
 echo ""
 
-while true
-do
-    USERNAME=$uservar PASSWORD=$passvar python run.py
+while true; do
+    USERNAME=$uservar PASSWORD=$passvar python run.py $@
     EXIT_CODE=$?
-    if [ $EXIT_CODE -eq 123 ]; then
+    if [ $EXIT_CODE -ne 0 ]; then
         bin/crash_notify
     fi
 done
-

@@ -1,0 +1,20 @@
+{
+  "jobClasses": [343],
+  "jobTargetDegrees": [402],
+  "languages": [
+    { "id": "fi", "name": "Suomi", "name_sv": "Finska", "name_en": "Finnish" }
+  ],
+  "regions": ["Pääkaupunkiseutu"],
+  "municipalities": [],
+  "organization": null,
+  "page": 1,
+  "startDate": "2020-09-21T00:00:00-12:00",
+  "endDate": "2020-12-20T00:00:00-12:00",
+  "types": [],
+  "tags": [],
+  "minLength": 6,
+  "continous": true,
+  "onlyFreeWeeks": true,
+  "orderBy": "publicationDate",
+  "reverse": true
+}

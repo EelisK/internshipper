@@ -9,5 +9,7 @@ while true; do
     EXIT_CODE=$?
     if [ $EXIT_CODE -ne 0 ]; then
         bin/crash_notify
+    else
+        break
     fi
 done

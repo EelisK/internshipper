@@ -4,6 +4,7 @@ import datetime
 import bs4
 import json
 from exceptions import InvalidCredentials, AuthenticationException
+from adapters import TLSAdapter
 
 
 BASE_URL = "https://www.jobiili.fi"
@@ -13,6 +14,7 @@ API_URL = BASE_URL + "/api"
 class Client:
     def __init__(self, username, password):
         self.session = requests.Session()
+        self.session.mount('https://', TLSAdapter())
         self.username = username
         self.password = password
         self.authorization = None
@@ -22,7 +24,7 @@ class Client:
         response.raise_for_status()
 
         response = self.session.get(
-            BASE_URL + "/Shibboleth.sso/Login?SAMLDS=1&&target=ss%3Amem%3A9858edc7fb5292f9f98a9aeb83b39b78949ad3c0bcaa5d3c8eb6e3f5727d6ff2&entityID=https%3A%2F%2Fidp.metropolia.fi%2Fidp"
+            BASE_URL + "/Shibboleth.sso/Login?SAMLDS=1&&target=ss%3Amem%3A37145caa43527f537365280be5ad3ba0b03419c4fb1f3645bce1864341006721&entityID=https%3A%2F%2Fidp.metropolia.fi%2Fidp"
         )
         response.raise_for_status()
 
@@ -64,6 +66,6 @@ class Client:
     def get_jobs(self, payload):
         response = requests.get(API_URL + "/Jobs/search?query=" + json.dumps(payload), headers={
                                 "authorization": self.authorization, "Content-Type": "application/json"})
-        if response.status_code == 401:
+        if response.status_code != 200:
             raise AuthenticationException()
         return response.json()

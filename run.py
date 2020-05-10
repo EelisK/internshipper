@@ -8,12 +8,9 @@ import jsonschema
 from args import args
 
 
-USERNAME = os.environ.get("USERNAME")
-PASSWORD = os.environ.get("PASSWORD")
-del os.environ["USERNAME"]
-del os.environ["PASSWORD"]
-
 if __name__ == "__main__":
+    USERNAME = os.environ.pop("USERNAME", None)
+    PASSWORD = os.environ.pop("PASSWORD", None)
     if not USERNAME:
         logging.error("USERNAME not defined")
         exit(1)

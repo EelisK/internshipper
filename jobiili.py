@@ -3,18 +3,11 @@ import os
 import datetime
 import bs4
 import json
+from exceptions import InvalidCredentials, AuthenticationException
 
 
 BASE_URL = "https://www.jobiili.fi"
 API_URL = BASE_URL + "/api"
-
-
-class InvalidCredentials(Exception):
-    pass
-
-
-class AuthenticationException(Exception):
-    pass
 
 
 class Client:

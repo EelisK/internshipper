@@ -10,7 +10,7 @@ app = FastAPI()
 def register(job: CreateJob):
     # TODO register to scheduler
     document = JobDocument(email=job.email, request=job.request,
-                           password=job.password, user=job.user)
+                           password=job.password, user=job.user, options=job.options)
     document.save()
     return {"success": True, "result": document.to_json()}
 

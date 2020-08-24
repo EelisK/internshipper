@@ -19,6 +19,10 @@ class Job(mongoengine.Document):
     request = mongoengine.DictField(required=True)
     created_at = mongoengine.DateTimeField()
 
+    # Options that can be used for filtering
+    # queries additionally to the standard request
+    options = mongoengine.DictField(required=False)
+
     # Encrypted fields
     password = mongoengine.StringField(required=True)
     user = mongoengine.StringField(required=True)

@@ -6,7 +6,7 @@ services:
     environment:
       PORT: 8000
       ENV: development
-      MONGODB_URL: mongodb://root:root@mongodb:27017
+      MONGODB_URL: mongodb://root:root@mongodb:27017/?authSource=admin
       DATABASE_NAME: internshipper-dev
       ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
     ports:

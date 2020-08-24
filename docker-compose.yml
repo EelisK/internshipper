@@ -1,0 +1,41 @@
+version: "3.7"
+services:
+  web:
+    build:
+      context: .
+    environment:
+      PORT: 8000
+      ENV: development
+      MONGODB_URL: mongodb://root:root@mongodb:27017
+      DATABASE_NAME: internshipper-dev
+      ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/srv/app
+    depends_on:
+      - mongodb
+    command:
+      [
+        "uvicorn",
+        "server:app",
+        "--reload",
+        "--app-dir",
+        "app",
+        "--host",
+        "0.0.0.0",
+      ]
+
+  mongodb:
+    image: mongo:4.2
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

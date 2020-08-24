@@ -13,6 +13,11 @@ requests = "*"
 bs4 = "*"
 lxml = "*"
 jsonschema = "*"
+mongoengine = "*"
+fastapi = "*"
+cryptography = "*"
+uvicorn = "*"
+pydantic = "*"
 
 [requires]
 python_version = "3.8.2"

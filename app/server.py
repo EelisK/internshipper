@@ -25,7 +25,7 @@ def register(job: CreateJob):
         raise BadRequestException("Jobiili request was likely malformed")
 
 
-@app.get("/jobs/delete/:job_id")
+@app.get("/jobs/delete/{job_id}")
 def delete_job(job_id: str):
     """
     Removes a job from the collection.
@@ -39,7 +39,7 @@ def delete_job(job_id: str):
     return {"success": True}
 
 
-@app.get("/jobs/confirm/:job_id")
+@app.get("/jobs/confirm/{job_id}")
 def confirm_job(job_id: str):
     # TODO start polling for the job when this link is opened
     # document = JobDocument.get(id=job_id)

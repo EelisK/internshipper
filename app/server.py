@@ -1,5 +1,5 @@
 from util import poll_jobs
-from exceptions import InvalidCredentials
+from exceptions import BadRequestException
 from jobiili import Client as JobiiliClient
 from models import CreateJob
 from db import Job as JobDocument
@@ -18,8 +18,11 @@ def register(job: CreateJob):
     client.login()
     document = JobDocument(email=job.email, request=job.request,
                            password=job.password, user=job.user, options=job.options)
-    document.save()
-    return {"success": True}
+    try:
+        document.save()
+        return {"success": True}
+    except:
+        raise BadRequestException("Jobiili request was likely malformed")
 
 
 @app.get("/jobs/delete/:job_id")

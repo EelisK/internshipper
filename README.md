@@ -1,26 +1,10 @@
 # internshipper
 
-## Getting started
+### Development with docker
 
-### Requirements
-
-- Pipenv
-
-### Installation
+- Connecting to mongo:
 
 ```bash
-pipenv install
+$ docker exec -it $(docker ps -f name=internshipper_mongo -q) bash
+$ mongo -u root -p root --authenticationDatabase admin
 ```
-
-## Usage
-
-```bash
-pipenv shell
-bin/start --interval 10 --request examples/request.json
-```
-
-## TODO
-
-- [ ] Sign up for internship that matches given criteria
-- [ ] Extensive error handling
-- [ ] Multiple requests

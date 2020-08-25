@@ -1,18 +1,25 @@
-from typing import Iterable
-from fastapi import FastAPI
-from db import Job as JobDocument
+from util import poll_jobs
+from exceptions import InvalidCredentials
+from jobiili import Client as JobiiliClient
 from models import CreateJob
+from db import Job as JobDocument
+from fastapi import FastAPI
+from typing import Iterable
+import mongoengine
+
 
 app = FastAPI()
 
 
 @app.post("/jobs")
 def register(job: CreateJob):
-    # TODO register to scheduler
+    # TODO send email with confirmation link
+    client = JobiiliClient(job.user, job.password)
+    client.login()
     document = JobDocument(email=job.email, request=job.request,
                            password=job.password, user=job.user, options=job.options)
     document.save()
-    return {"success": True, "result": document.to_json()}
+    return {"success": True}
 
 
 @app.get("/jobs/delete/:job_id")
@@ -23,7 +30,17 @@ def delete_job(job_id: str):
     has received this link from their email address
     """
     # TODO add additional protection eg. Nonce and link validity period
-    document = JobDocument.get(id=job_id)
+    document = JobDocument.get(id=mongoengine.ObjectId(job_id))
     document.delete()
 
+    return {"success": True}
+
+
+@app.get("/jobs/confirm/:job_id")
+def confirm_job(job_id: str):
+    # TODO start polling for the job when this link is opened
+    # document = JobDocument.get(id=job_id)
+    # start_polling(...document)
+    # TODO add nonce and/or other forms of validation
+    # TODO redirect to internshipper url and render success message there
     return {"success": True}

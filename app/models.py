@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 
 class Options(BaseModel):
-    include_advanced_students: bool
+    exclude_advanced_students: bool
 
 
 class CreateJob(BaseModel):

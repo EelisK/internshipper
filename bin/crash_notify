@@ -1,6 +1,0 @@
-#!/bin/bash
-
-curl 'https://kostiainen.dev/contact/tg' \
-    -H 'content-type: application/json' \
-    --data-binary '{"name":"ERROR","email":"noreply@kostiainen.dev","subject":"Script has crashed","text":"Polling script has crashed"}' \
-    --compressed

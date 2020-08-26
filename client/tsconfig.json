@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": false,
+        "alwaysStrict": true,
+        "jsx": "react",
+        "lib": ["es5", "es6", "dom"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "outDir": "./dist/",
+        "target": "es5"
+    },
+    "exclude": ["node_modules"],
+    "include": ["src"]
+}

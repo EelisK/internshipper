@@ -34,6 +34,7 @@ import {
   SearchAdvanced,
   Workshop,
 } from "grommet-icons";
+import { MultiSelect } from "../../MultiSelect";
 
 export interface Props {
   request: ReadableJobiiliRequest;
@@ -41,19 +42,11 @@ export interface Props {
 }
 
 export interface State {
-  provinceSearch: string;
-  municipalitySearch: string;
-  targetDegreeSearch: string;
-  practiceClassificationSearch: string;
   employeeSearch: string;
 }
 
 export class JobiiliRequest extends React.PureComponent<Props, State> {
   state: State = {
-    targetDegreeSearch: "",
-    municipalitySearch: "",
-    provinceSearch: "",
-    practiceClassificationSearch: "",
     employeeSearch: "",
   };
   render() {
@@ -71,95 +64,39 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
     return (
       <Box gridArea="profession">
         <FormField label="Guidance languages">
-          <Select
-            multiple
+          <MultiSelect<JobiiliLanguage>
+            disableSearch
             labelKey="name"
             valueKey="name"
             icon={<Language />}
             options={AVAILABLE_LANGUAGES}
-            messages={{
-              multiple: this.props.request.languages
-                .map((x) => x.name)
-                .join(", "),
-            }}
-            value={this.props.request.languages}
-            onChange={({ option }: { option: JobiiliLanguage }) => {
-              this.setState({ provinceSearch: "" });
-              if (this.props.request.provinces.includes(option))
-                this.partialUpdateRequest({
-                  languages: this.props.request.languages.filter(
-                    (x) => x !== option
-                  ),
-                });
-              else
-                this.partialUpdateRequest({
-                  languages: [...this.props.request.languages, option],
-                });
-            }}
+            values={this.props.request.languages}
+            setValues={(languages) => this.partialUpdateRequest({ languages })}
           />
         </FormField>
         <FormField label="Degree titles">
-          <Select
-            multiple
+          <MultiSelect<JobiiliDegreeTitle>
             labelKey="name"
             valueKey="name"
             icon={<UserWorker />}
-            onSearch={(targetDegreeSearch) =>
-              this.setState({ targetDegreeSearch })
+            options={AVAILABLE_DEGREE_TITLES}
+            values={this.props.request.jobTargetDegrees}
+            setValues={(jobTargetDegrees) =>
+              this.partialUpdateRequest({ jobTargetDegrees })
             }
-            options={AVAILABLE_DEGREE_TITLES.filter((targetDegree) =>
-              this.getSearchableString(targetDegree.name).includes(
-                this.getSearchableString(this.state.targetDegreeSearch)
-              )
-            )}
-            messages={{
-              multiple: this.props.request.jobTargetDegrees
-                .map((degree) => degree.name)
-                .join(", "),
-            }}
-            value={this.props.request.jobTargetDegrees}
-            onChange={({ option }: { option: JobiiliDegreeTitle }) => {
-              this.setState({ targetDegreeSearch: "" });
-              if (this.props.request.jobTargetDegrees.includes(option))
-                this.partialUpdateRequest({
-                  jobTargetDegrees: this.props.request.jobTargetDegrees.filter(
-                    (x) => x !== option
-                  ),
-                });
-              else
-                this.partialUpdateRequest({
-                  jobTargetDegrees: [
-                    ...this.props.request.jobTargetDegrees,
-                    option,
-                  ],
-                });
-            }}
           />
         </FormField>
         <FormField label="Practice classification">
-          <Select
-            multiple
-            options={AVAILABLE_PRACTICE_CLASSIFICATIONS.filter((klass) =>
-              this.getSearchableString(klass.name).includes(
-                this.getSearchableString(
-                  this.state.practiceClassificationSearch
-                )
-              )
-            )}
-            onSearch={(practiceClassificationSearch) =>
-              this.setState({ practiceClassificationSearch })
-            }
+          <MultiSelect<JobiiliDegreeTitle>
             labelKey="name"
             valueKey="name"
             icon={<Workshop />}
-            messages={{
-              multiple: this.props.request.jobClasses
-                .map((klass) => klass.name)
-                .join(", "),
-            }}
-            value={this.props.request.jobClasses}
-            onChange={({ option }: { option: JobiiliDegreeTitle }) => {
-              this.setState({ practiceClassificationSearch: "" });
+            options={AVAILABLE_PRACTICE_CLASSIFICATIONS}
+            values={this.props.request.jobClasses}
+            setValues={(jobClasses) =>
+              this.partialUpdateRequest({ jobClasses })
+            }
+            getChanges={(option: JobiiliDegreeTitle) => {
               const isMetaClassification = option.misc !== null;
               const classificationsInThisOption = isMetaClassification
                 ? option.misc.jobClasses.map((jobId) =>
@@ -173,12 +110,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
                 this.props.request.jobClasses,
                 (x) => x.id
               );
-              this.partialUpdateRequest({
-                jobClasses: [
-                  ...this.props.request.jobClasses,
-                  ...newClassifications,
-                ],
-              });
+              return [...this.props.request.jobClasses, ...newClassifications];
             }}
           />
         </FormField>
@@ -215,76 +147,25 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
     return (
       <Box gridArea="timeAndPlace">
         <FormField label="Province">
-          <Select
-            multiple
+          <MultiSelect<JobiiliProvince>
             labelKey="name"
             valueKey="name"
             icon={<MapLocation />}
-            emptySearchMessage="No province found"
-            onSearch={(provinceSearch) => this.setState({ provinceSearch })}
-            options={AVAILABLE_PROVINCES.filter((province) =>
-              this.getSearchableString(province.name).includes(
-                this.getSearchableString(this.state.provinceSearch)
-              )
-            )}
-            messages={{
-              multiple: this.props.request.provinces
-                .map((x) => x.name)
-                .join(", "),
-            }}
-            value={this.props.request.provinces}
-            onChange={({ option }: { option: JobiiliProvince }) => {
-              this.setState({ provinceSearch: "" });
-              if (this.props.request.provinces.includes(option))
-                this.partialUpdateRequest({
-                  provinces: this.props.request.provinces.filter(
-                    (x) => x !== option
-                  ),
-                });
-              else
-                this.partialUpdateRequest({
-                  provinces: [...this.props.request.provinces, option],
-                });
-            }}
+            options={AVAILABLE_PROVINCES}
+            values={this.props.request.provinces}
+            setValues={(provinces) => this.partialUpdateRequest({ provinces })}
           />
         </FormField>
         <FormField label="Municipality">
-          <Select
-            multiple
+          <MultiSelect<JobiiliMunicipality>
             labelKey="name"
             valueKey="name"
             icon={<Location />}
-            emptySearchMessage="No municipalities found"
-            options={AVAILABLE_MUNICIPALITIES.filter((municipality) =>
-              this.getSearchableString(municipality.name).includes(
-                this.getSearchableString(this.state.municipalitySearch)
-              )
-            )}
-            messages={{
-              multiple: this.props.request.municipalities
-                .map((x) => x.name)
-                .join(", "),
-            }}
-            value={this.props.request.municipalities}
-            onSearch={(municipalitySearch) =>
-              this.setState({ municipalitySearch })
+            options={AVAILABLE_MUNICIPALITIES}
+            values={this.props.request.municipalities}
+            setValues={(municipalities) =>
+              this.partialUpdateRequest({ municipalities })
             }
-            onChange={({ option }: { option: JobiiliMunicipality }) => {
-              this.setState({ municipalitySearch: "" });
-              if (this.props.request.municipalities.includes(option))
-                this.partialUpdateRequest({
-                  municipalities: this.props.request.municipalities.filter(
-                    (x) => x !== option
-                  ),
-                });
-              else
-                this.partialUpdateRequest({
-                  municipalities: [
-                    ...this.props.request.municipalities,
-                    option,
-                  ],
-                });
-            }}
           />
         </FormField>
         <FormField label="Miminum length of internship in weeks">

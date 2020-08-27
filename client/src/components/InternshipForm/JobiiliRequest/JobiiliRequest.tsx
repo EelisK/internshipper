@@ -44,6 +44,8 @@ export interface State {
   provinceSearch: string;
   municipalitySearch: string;
   targetDegreeSearch: string;
+  practiceClassificationSearch: string;
+  employeeSearch: string;
 }
 
 export class JobiiliRequest extends React.PureComponent<Props, State> {
@@ -51,6 +53,8 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
     targetDegreeSearch: "",
     municipalitySearch: "",
     provinceSearch: "",
+    practiceClassificationSearch: "",
+    employeeSearch: "",
   };
   render() {
     return (
@@ -64,11 +68,6 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
   }
 
   private renderDegreeRelatedFields() {
-    console.log("------------");
-
-    console.log(this.props.request.jobClasses);
-    console.log(this.props.request.jobTargetDegrees);
-
     return (
       <Box gridArea="profession">
         <FormField label="Guidance languages">
@@ -140,7 +139,16 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
         <FormField label="Practice classification">
           <Select
             multiple
-            options={AVAILABLE_PRACTICE_CLASSIFICATIONS}
+            options={AVAILABLE_PRACTICE_CLASSIFICATIONS.filter((klass) =>
+              this.getSearchableString(klass.name).includes(
+                this.getSearchableString(
+                  this.state.practiceClassificationSearch
+                )
+              )
+            )}
+            onSearch={(practiceClassificationSearch) =>
+              this.setState({ practiceClassificationSearch })
+            }
             labelKey="name"
             valueKey="name"
             icon={<Workshop />}
@@ -151,6 +159,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             }}
             value={this.props.request.jobClasses}
             onChange={({ option }: { option: JobiiliDegreeTitle }) => {
+              this.setState({ practiceClassificationSearch: "" });
               const isMetaClassification = option.misc !== null;
               const classificationsInThisOption = isMetaClassification
                 ? option.misc.jobClasses.map((jobId) =>
@@ -178,9 +187,15 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             labelKey="name"
             valueKey="id"
             icon={<Briefcase />}
-            options={AVAILABLE_ORGANIZATIONS}
+            options={AVAILABLE_ORGANIZATIONS.filter((employee) =>
+              this.getSearchableString(employee.name).includes(
+                this.getSearchableString(this.state.employeeSearch)
+              )
+            )}
+            onSearch={(employeeSearch) => this.setState({ employeeSearch })}
             value={this.props.request.organization || {}}
             onChange={({ option }: { option: JobiiliOrganization }) => {
+              this.setState({ employeeSearch: "" });
               if (option.id === this.props.request.organization?.id)
                 this.partialUpdateRequest({
                   organization: null,

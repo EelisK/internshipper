@@ -4,7 +4,7 @@ export interface JobiiliRequest {
   languages: JobiiliLanguage[];
   regions: string[];
   municipalities: JobiiliMunicipality[];
-  organization: JobiiliOrganization | null;
+  organization: number | null;
   page: number; // TODO: backend counterpart
   startDate: string;
   endDate: string;
@@ -12,6 +12,7 @@ export interface JobiiliRequest {
   tags: []; // TODO:
   minLength: number;
   continous: boolean;
+  onlyFreeWeeks: boolean;
   orderBy: keyof JobiiliResponse;
   reverse: boolean;
 }

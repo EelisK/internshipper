@@ -7,7 +7,7 @@ export interface Props extends UserContactInfo {
   setUserContactInfo: (contactInfo: UserContactInfo) => any;
 }
 
-export const NotificationForm: React.FC<Props> = (props) => {
+export const Notification: React.FC<Props> = (props) => {
   const getOnChangeListener = (property: keyof UserContactInfo) => (
     event: React.ChangeEvent<any>
   ) => {

@@ -7,7 +7,7 @@ export interface Props {
   setAdditionalOptions: (options: AdditionalRequestOptions) => any;
 }
 
-export class AdditionalFiltersForm extends React.PureComponent<Props> {
+export class AdditionalFilters extends React.PureComponent<Props> {
   render() {
     return (
       <CheckBox

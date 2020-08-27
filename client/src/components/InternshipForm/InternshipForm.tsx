@@ -5,17 +5,17 @@ import {
   AdditionalRequestOptions,
 } from "../../api/types/Internshipper";
 import {
-  JobiiliRequest,
+  JobiiliRequest as JobiiliRequestType,
   JobiiliProvince,
   JobiiliOrganization,
 } from "../../api/types";
-import { JobiiliRequestForm } from "./JobiiliRequestForm";
-import { AdditionalFiltersForm } from "./AdditionalFiltersForm";
-import { JobiiliLoginForm } from "./JobiiliLoginForm";
-import { NotificationForm } from "./NotificationForm";
+import { JobiiliRequest } from "./JobiiliRequest";
+import { AdditionalFilters } from "./AdditionalFilters";
+import { JobiiliLogin } from "./JobiiliLogin";
+import { Notification } from "./Notification";
 
 export type ReadableJobiiliRequest = Omit<
-  JobiiliRequest,
+  JobiiliRequestType,
   "regions" | "organization"
 > & {
   provinces: JobiiliProvince[];
@@ -69,21 +69,21 @@ export class InternshipForm extends React.PureComponent<Props, State> {
   render() {
     return (
       <Form onSubmit={this.onSubmit}>
-        <NotificationForm
+        <Notification
           email={this.state.internshipSearchQuery.email}
           setUserContactInfo={this.partialUpdateInternshipQuery}
         />
-        <JobiiliLoginForm
+        <JobiiliLogin
           user={this.state.internshipSearchQuery.user}
           password={this.state.internshipSearchQuery.password}
           setCredentials={this.partialUpdateInternshipQuery}
         />
 
-        <JobiiliRequestForm
+        <JobiiliRequest
           request={this.state.request}
           setRequest={(request) => this.setState({ request })}
         />
-        <AdditionalFiltersForm
+        <AdditionalFilters
           options={this.state.options}
           setAdditionalOptions={(options) => this.setState({ options })}
         />
@@ -108,7 +108,7 @@ export class InternshipForm extends React.PureComponent<Props, State> {
 
   private onSubmit = async () => {
     const { provinces, organization, ...partialRequest } = this.state.request;
-    const request: JobiiliRequest = {
+    const request: JobiiliRequestType = {
       ...partialRequest,
       regions: provinces.map((x) => x.name),
       organization: organization?.id,

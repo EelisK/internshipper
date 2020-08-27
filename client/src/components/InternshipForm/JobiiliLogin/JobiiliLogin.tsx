@@ -7,7 +7,7 @@ export interface Props extends UserCredentials {
   setCredentials: (credentials: UserCredentials) => any;
 }
 
-export const JobiiliLoginForm: React.FC<Props> = (props) => {
+export const JobiiliLogin: React.FC<Props> = (props) => {
   const getOnChangeListener = (property: keyof UserCredentials) => (
     event: React.ChangeEvent<any>
   ) => {

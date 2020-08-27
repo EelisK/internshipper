@@ -10,7 +10,6 @@ import {
   Form,
 } from "grommet";
 import {
-  JobiiliRequest,
   JobiiliProvince,
   JobiiliMunicipality,
   JobiiliLanguage,
@@ -43,7 +42,7 @@ export interface State {
   municipalitySearch: string;
 }
 
-export class JobiiliRequestForm extends React.PureComponent<Props, State> {
+export class JobiiliRequest extends React.PureComponent<Props, State> {
   state: State = {
     municipalitySearch: "",
     provinceSearch: "",

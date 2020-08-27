@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UserCredentials } from "../../../api/types";
-import { TextInput } from "grommet";
+import { TextInput, FormField, Form, Grid, Box } from "grommet";
 import { User, Lock } from "grommet-icons";
 
 export interface Props extends UserCredentials {
@@ -16,22 +16,31 @@ export const JobiiliLogin: React.FC<Props> = (props) => {
     setCredentials({ ...credentials, [property]: value });
   };
   return (
-    <>
-      <TextInput
-        onChange={getOnChangeListener("user")}
-        value={props.user}
-        placeholder="username"
-        icon={<User />}
-        required
-      />
-      <TextInput
-        onChange={getOnChangeListener("password")}
-        value={props.password}
-        placeholder="metropolia password"
-        type="password"
-        icon={<Lock />}
-        required
-      />
-    </>
+    <Grid
+      areas={[{ name: "center", start: [1, 0], end: [1, 0] }]}
+      columns={["xsmall", "flex", "xsmall"]}
+      rows={["small"]}
+      gap="small"
+    >
+      <Box gridArea="center">
+        <FormField label="Metropolia username">
+          <TextInput
+            onChange={getOnChangeListener("user")}
+            value={props.user}
+            icon={<User />}
+            required
+          />
+        </FormField>
+        <FormField label="Metropolia password">
+          <TextInput
+            onChange={getOnChangeListener("password")}
+            value={props.password}
+            type="password"
+            icon={<Lock />}
+            required
+          />
+        </FormField>
+      </Box>
+    </Grid>
   );
 };

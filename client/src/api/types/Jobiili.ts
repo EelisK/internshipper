@@ -1,4 +1,6 @@
 export interface JobiiliRequest {
+  combo: string | null;
+  comboEmployeeNameOnly: boolean | null;
   jobClasses: number[];
   jobTargetDegrees: number[];
   languages: JobiiliLanguage[];
@@ -56,8 +58,14 @@ export interface JobiiliDegreeTitle {
   name_sv: string;
   name_en: string;
   deleted: boolean;
-  extraInfo: string;
-  misc: { maxPoints: string; jobClasses: number[] };
+  extraInfo: string | null;
+  // Meta degree titles has non-null misc values
+  misc: JobiiliDegreeTitleMisc | null;
+}
+
+export interface JobiiliDegreeTitleMisc {
+  maxPoints: string;
+  jobClasses: number[];
 }
 
 export interface JobiiliResponse {

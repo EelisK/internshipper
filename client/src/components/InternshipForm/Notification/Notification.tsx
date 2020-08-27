@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UserContactInfo } from "../../../api/types";
-import { TextInput } from "grommet";
+import { TextInput, FormField, Box, Grid } from "grommet";
 import { Mail } from "grommet-icons";
 
 export interface Props extends UserContactInfo {
@@ -20,13 +20,23 @@ export const Notification: React.FC<Props> = (props) => {
   };
 
   return (
-    <TextInput
-      onChange={getOnChangeListener("email")}
-      value={props.email}
-      placeholder="email"
-      type="email"
-      icon={<Mail />}
-      required
-    />
+    <Grid
+      areas={[{ name: "center", start: [1, 0], end: [1, 0] }]}
+      columns={["xsmall", "flex", "xsmall"]}
+      rows={["xsmall"]}
+      gap="small"
+    >
+      <Box gridArea="center">
+        <FormField label="Email address">
+          <TextInput
+            onChange={getOnChangeListener("email")}
+            value={props.email}
+            type="email"
+            icon={<Mail />}
+            required
+          />
+        </FormField>
+      </Box>
+    </Grid>
   );
 };

@@ -1,4 +1,4 @@
 export {
-  InternshipFormContainer as InternshipForm,
+  InternshipFormContainerWrapper as InternshipForm,
   WrapperProps as Props,
 } from "./InternshipFormContainer";

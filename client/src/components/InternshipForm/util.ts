@@ -1,4 +1,4 @@
-import { ReadableJobiiliRequest } from "./InternshipForm";
+import { ReadableJobiiliRequest } from "./types";
 import { JobiiliRequest } from "../../api/types";
 
 export const transformReadableJobiiliRequest = (

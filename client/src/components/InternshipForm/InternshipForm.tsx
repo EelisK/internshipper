@@ -1,90 +1,35 @@
 import * as React from "react";
 import { Button, Grid } from "grommet";
-import {
-  InternshipSearch,
-  AdditionalRequestOptions,
-} from "../../api/types/Internshipper";
-import {
-  JobiiliRequest as JobiiliRequestType,
-  JobiiliProvince,
-  JobiiliOrganization,
-  JobiiliDegreeTitle,
-} from "../../api/types";
+import { InternshipperData, AdditionalRequestOptions } from "../../api/types";
+import { ReadableJobiiliRequest } from "./types";
 import { JobiiliRequest } from "./JobiiliRequest";
 import { AdditionalFilters } from "./AdditionalFilters";
 import { JobiiliLogin } from "./JobiiliLogin";
 import { Notification } from "./Notification";
 import { StyledForm } from "./styled";
-import { transformReadableJobiiliRequest } from "./util";
 
-export type ReadableJobiiliRequest = Omit<
-  JobiiliRequestType,
-  "regions" | "organization" | "jobTargetDegrees" | "jobClasses"
-> & {
-  provinces: JobiiliProvince[];
-  organization: JobiiliOrganization | null;
-  jobTargetDegrees: JobiiliDegreeTitle[];
-  jobClasses: JobiiliDegreeTitle[];
-};
-
-export interface State {
-  internshipSearchQuery: Omit<InternshipSearch, "request" | "options">;
+export interface Props {
+  onSubmit: () => Promise<any>;
+  updateInternshipQuery: (update: Partial<InternshipperData>) => any;
+  updateJobiiliRequest: (request: Partial<ReadableJobiiliRequest>) => any;
+  updateOptions: (options: Partial<AdditionalRequestOptions>) => any;
+  internshipSearchQuery: InternshipperData;
   request: ReadableJobiiliRequest;
   options: AdditionalRequestOptions;
 }
 
-export interface Props {
-  onSubmit: (request: InternshipSearch) => Promise<any>;
-}
-
-const getInitialState = (): State => ({
-  request: {
-    orderBy: "publicationDate",
-    reverse: true,
-    types: [],
-    tags: [],
-
-    combo: "",
-    comboEmployeeNameOnly: false,
-
-    continous: false,
-    onlyFreeWeeks: false,
-    organization: null,
-
-    endDate: new Date().toISOString(),
-    startDate: new Date().toISOString(),
-
-    jobClasses: [],
-    municipalities: [],
-    jobTargetDegrees: [],
-    languages: [],
-    minLength: 0,
-    page: 0,
-    provinces: [],
-  },
-  options: {
-    exclude_advanced_students: false,
-  },
-  internshipSearchQuery: {
-    email: "",
-    password: "",
-    user: "",
-  },
-});
-
-export class InternshipForm extends React.PureComponent<Props, State> {
-  state: State = getInitialState();
+export class InternshipForm extends React.PureComponent<Props> {
   render() {
     return (
-      <StyledForm onSubmit={this.onSubmit}>
+      <StyledForm onSubmit={this.props.onSubmit}>
         <Notification
-          email={this.state.internshipSearchQuery.email}
-          setUserContactInfo={this.partialUpdateInternshipQuery}
+          email={this.props.internshipSearchQuery.email}
+          setUserContactInfo={this.props.updateInternshipQuery}
         />
         <JobiiliLogin
-          user={this.state.internshipSearchQuery.user}
-          password={this.state.internshipSearchQuery.password}
-          setCredentials={this.partialUpdateInternshipQuery}
+          user={this.props.internshipSearchQuery.user}
+          password={this.props.internshipSearchQuery.password}
+          setCredentials={this.props.updateInternshipQuery}
         />
         <Grid
           areas={[
@@ -99,12 +44,12 @@ export class InternshipForm extends React.PureComponent<Props, State> {
           gap="small"
         >
           <JobiiliRequest
-            request={this.state.request}
-            setRequest={(request) => this.setState({ request })}
+            request={this.props.request}
+            setRequest={this.props.updateJobiiliRequest}
           />
           <AdditionalFilters
-            options={this.state.options}
-            setAdditionalOptions={(options) => this.setState({ options })}
+            options={this.props.options}
+            setAdditionalOptions={this.props.updateOptions}
           />
 
           <Button primary type="submit" label="Find" />
@@ -112,27 +57,4 @@ export class InternshipForm extends React.PureComponent<Props, State> {
       </StyledForm>
     );
   }
-
-  private partialUpdateInternshipQuery = (
-    update: Partial<State["internshipSearchQuery"]>
-  ) => {
-    this.setState((prevState) => {
-      return {
-        internshipSearchQuery: {
-          ...prevState.internshipSearchQuery,
-          ...update,
-        },
-      };
-    });
-  };
-
-  private onSubmit = async () => {
-    const internshipSearch: InternshipSearch = {
-      ...this.state.internshipSearchQuery,
-      options: this.state.options,
-      request: transformReadableJobiiliRequest(this.state.request),
-    };
-    await this.props.onSubmit(internshipSearch);
-    this.setState(getInitialState());
-  };
 }

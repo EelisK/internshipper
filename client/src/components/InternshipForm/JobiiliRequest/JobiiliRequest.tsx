@@ -14,6 +14,8 @@ import {
   JobiiliLanguage,
   JobiiliDegreeTitle,
   JobiiliOrganization,
+  AdditionalRequestOptions,
+  InternshipSearch,
 } from "../../../api/types";
 import {
   AVAILABLE_LANGUAGES,
@@ -23,7 +25,7 @@ import {
   AVAILABLE_ORGANIZATIONS,
   AVAILABLE_PRACTICE_CLASSIFICATIONS,
 } from "../../../api/fixtures";
-import { ReadableJobiiliRequest } from "../InternshipForm";
+import { ReadableJobiiliRequest } from "../types";
 import {
   MapLocation,
   Location,

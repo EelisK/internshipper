@@ -4,10 +4,12 @@ export interface AdditionalRequestOptions {
   exclude_advanced_students: boolean;
 }
 
-export interface InternshipSearch extends UserCredentials, UserContactInfo {
+export interface InternshipSearch extends InternshipperData {
   request: JobiiliRequest;
   options?: AdditionalRequestOptions;
 }
+
+export type InternshipperData = UserCredentials & UserContactInfo;
 
 export interface UserContactInfo {
   email: string;

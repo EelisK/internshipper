@@ -41,6 +41,7 @@ export class MultiSelect<T extends object> extends React.PureComponent<
       <Select
         plain
         multiple
+        closeOnChange={false}
         labelKey={labelKey}
         valueKey={valueKey}
         icon={icon}

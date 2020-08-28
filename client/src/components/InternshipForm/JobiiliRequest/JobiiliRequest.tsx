@@ -49,6 +49,8 @@ const META_PRACTICE_CLASSES = AVAILABLE_PRACTICE_CLASSIFICATIONS.filter(
   (x) => x.misc !== null
 );
 
+const DATE_FORMAT = "dd/mm/yyyy";
+
 export class JobiiliRequest extends React.PureComponent<Props, State> {
   state: State = {
     employeeSearch: "",
@@ -172,7 +174,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             <DateInput
               inputProps={{ required: true }}
               value={this.props.request.startDate}
-              format="mm/dd/yyyy"
+              format={DATE_FORMAT}
               onChange={({ value }: any) =>
                 this.partialUpdateRequest({ startDate: value })
               }
@@ -182,7 +184,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             <DateInput
               inputProps={{ required: true }}
               value={this.props.request.endDate}
-              format="mm/dd/yyyy"
+              format={DATE_FORMAT}
               onChange={({ value }: any) =>
                 this.partialUpdateRequest({ endDate: value })
               }

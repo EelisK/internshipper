@@ -15,6 +15,7 @@ import { AdditionalFilters } from "./AdditionalFilters";
 import { JobiiliLogin } from "./JobiiliLogin";
 import { Notification } from "./Notification";
 import { StyledForm } from "./styled";
+import { transformReadableJobiiliRequest } from "./util";
 
 export type ReadableJobiiliRequest = Omit<
   JobiiliRequestType,
@@ -126,24 +127,10 @@ export class InternshipForm extends React.PureComponent<Props, State> {
   };
 
   private onSubmit = async () => {
-    const {
-      provinces,
-      organization,
-      jobTargetDegrees,
-      jobClasses,
-      ...partialRequest
-    } = this.state.request;
-    const request: JobiiliRequestType = {
-      ...partialRequest,
-      regions: provinces.map((x) => x.name),
-      organization: organization?.id,
-      jobTargetDegrees: jobTargetDegrees.map((x) => x.id),
-      jobClasses: jobClasses.map((x) => x.id),
-    };
     const internshipSearch: InternshipSearch = {
       ...this.state.internshipSearchQuery,
       options: this.state.options,
-      request,
+      request: transformReadableJobiiliRequest(this.state.request),
     };
     await this.props.onSubmit(internshipSearch);
     this.setState(getInitialState());

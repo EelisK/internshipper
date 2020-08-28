@@ -1,5 +1,5 @@
 import * as React from "react";
-import { differenceBy } from "lodash";
+import { differenceBy, difference, flatMap } from "lodash";
 import {
   DateInput,
   Box,
@@ -44,6 +44,10 @@ export interface Props {
 export interface State {
   employeeSearch: string;
 }
+
+const META_PRACTICE_CLASSES = AVAILABLE_PRACTICE_CLASSIFICATIONS.filter(
+  (x) => x.misc !== null
+);
 
 export class JobiiliRequest extends React.PureComponent<Props, State> {
   state: State = {
@@ -92,26 +96,11 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             valueKey="name"
             icon={<Workshop />}
             options={AVAILABLE_PRACTICE_CLASSIFICATIONS}
-            values={this.props.request.jobClasses}
+            values={this.jobClassesWithMetaValues}
             setValues={(jobClasses) =>
               this.partialUpdateRequest({ jobClasses })
             }
-            getChanges={(option: JobiiliDegreeTitle) => {
-              const isMetaClassification = option.misc !== null;
-              const classificationsInThisOption = isMetaClassification
-                ? option.misc.jobClasses.map((jobId) =>
-                    AVAILABLE_PRACTICE_CLASSIFICATIONS.find(
-                      (job) => job.id === jobId
-                    )
-                  )
-                : [option];
-              const newClassifications = differenceBy(
-                classificationsInThisOption,
-                this.props.request.jobClasses,
-                (x) => x.id
-              );
-              return [...this.props.request.jobClasses, ...newClassifications];
-            }}
+            getChanges={this.getClassificationChanges}
           />
         </FormField>
         <FormField label="Employee">
@@ -168,7 +157,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             }
           />
         </FormField>
-        <FormField label="Miminum length of internship in weeks">
+        <FormField label="Minimum length of internship in weeks">
           <TextInput
             reverse
             required
@@ -258,6 +247,38 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
       </Box>
     );
   }
+
+  private get jobClassesWithMetaValues() {
+    const metaClassGroups = META_PRACTICE_CLASSES.map(
+      ({ misc }) => misc.jobClasses
+    );
+    const currentClassIds = this.props.request.jobClasses.map(
+      (klass) => klass.id
+    );
+    const idsMissingFromMetas = metaClassGroups.map((group) =>
+      difference(group, currentClassIds)
+    );
+    const includedMetaClasses = flatMap(idsMissingFromMetas, (ids, index) => {
+      if (ids.length !== 0) return [];
+      else return [META_PRACTICE_CLASSES[index]];
+    });
+    return [...includedMetaClasses, ...this.props.request.jobClasses];
+  }
+
+  private getClassificationChanges = (option: JobiiliDegreeTitle) => {
+    const isMetaClassification = option.misc !== null;
+    const classificationsInThisOption = isMetaClassification
+      ? option.misc.jobClasses.map((jobId) =>
+          AVAILABLE_PRACTICE_CLASSIFICATIONS.find((job) => job.id === jobId)
+        )
+      : [option];
+    const newClassifications = differenceBy(
+      classificationsInThisOption,
+      this.props.request.jobClasses,
+      (x) => x.id
+    );
+    return [...this.props.request.jobClasses, ...newClassifications];
+  };
 
   private getRequestPropertyChangeListener = (
     property: keyof ReadableJobiiliRequest

@@ -20,9 +20,9 @@ uvicorn = "*"
 pydantic = "*"
 botocore = "*"
 boto3 = "*"
-celery = "*"
-jinja2 = "*"
+Jinja2 = "*"
 html2text = "*"
+fastapi-utils = "*"
 
 [requires]
 python_version = "3.8.2"

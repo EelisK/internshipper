@@ -25,14 +25,11 @@ def poll_jobs(job: db.Job):
         [__inform_new_job(new_job, job)
          for new_job in __extract_new_jobs(job.found_jobs, curr_jobs)]
         if len(jobs) != 0:
-            job.found_jobs = [*job.found_jobs, *jobs]
-            job.save()
+            job.update(found_jobs=[*job.found_jobs, *jobs])
         logging.info("{} Poll complete for job {}".format(
             datetime.datetime.utcnow(), job.id))
     except requests.exceptions.ConnectionError:
-        logging.warn("Exception occurred. Attempting re-login")
-        client.login()
-        poll_jobs(job)
+        logging.warn("Got a connection issue while polling {}".format(job.id))
     except requests.exceptions.ReadTimeout:
         logging.error("Read time-out occurred")
     except requests.exceptions.RequestException as e:

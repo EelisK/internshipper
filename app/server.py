@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
+from fastapi_utils.tasks import repeat_every
+
 from util import poll_jobs, ses_client, \
     create_html_email_from_template, \
     create_plaintext_email_from_template
@@ -21,9 +23,15 @@ INTERNSHIPPER_APP_URL = os.environ.get(
     "INTERNSHIPPER_APP_URL", "https://internshipper.io")
 
 
+@app.on_event("startup")
+@repeat_every(seconds=10, wait_first=True)
+def perform_job_polling():
+    for job in JobDocument.objects(confirmed=True):
+        poll_jobs(job)
+
+
 @app.post("/jobs")
 def register(job: CreateJob):
-    # TODO send email with confirmation link
     client = JobiiliClient(job.user, job.password)
     client.login()
     document = JobDocument(email=job.email, request=job.request,
@@ -52,14 +60,11 @@ def delete_job(job_id: str):
 
 @app.get("/jobs/confirm/{job_id}")
 def confirm_job(job_id: str):
-    # TODO start polling for the job when this link is opened
-    # document = JobDocument.get(id=job_id)
-    # start_polling(...document)
     # TODO add nonce and/or other forms of validation
     document = JobDocument.objects.get(id=job_id)
     if not document.confirmed:
-        document.confirmed = True
-        document.save()
+        document.update(confirmed=True)
+        # tasks.schedule_job(document)
         return RedirectResponse("/")
     else:
         raise BadRequestException("Subscription already confirmed")

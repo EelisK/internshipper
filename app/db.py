@@ -37,7 +37,7 @@ class Job(mongoengine.Document):
         self.created_at = datetime.datetime.now()
         self.user = encrypt(self.user)
         self.password = encrypt(self.password)
-        return super(Job, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def __format_request(self):
         with open('./app/request_schema.json', 'r') as schema:

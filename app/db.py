@@ -21,6 +21,7 @@ class Job(mongoengine.Document):
     email = mongoengine.StringField(required=True)
     request = mongoengine.DictField(required=True)
     created_at = mongoengine.DateTimeField()
+    confirmed = mongoengine.BooleanField(required=True, default=False)
     # Array where found jobs for this request are kept
     # TODO add separate collection for this
     found_jobs = mongoengine.ListField(null=False, default=[])

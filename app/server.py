@@ -1,14 +1,24 @@
-from util import poll_jobs
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from util import poll_jobs, ses_client, \
+    create_html_email_from_template, \
+    create_plaintext_email_from_template
+from botocore.exceptions import ClientError
 from exceptions import BadRequestException
 from jobiili import Client as JobiiliClient
 from models import CreateJob
 from db import Job as JobDocument
-from fastapi import FastAPI
 from typing import Iterable
+
 import mongoengine
+import logging
+import json
+import os
 
 
 app = FastAPI()
+INTERNSHIPPER_APP_URL = os.environ.get(
+    "INTERNSHIPPER_APP_URL", "https://internshipper.io")
 
 
 @app.post("/jobs")
@@ -20,7 +30,8 @@ def register(job: CreateJob):
                            password=job.password, user=job.user, options=job.options)
     try:
         document.save()
-        return {"success": True}
+        __try_send_confirmation_email(document)
+        return {"success": True, "result": json.loads(document.to_json()), "identity": client.identity}
     except:
         raise BadRequestException("Jobiili request was likely malformed")
 
@@ -33,7 +44,7 @@ def delete_job(job_id: str):
     has received this link from their email address
     """
     # TODO add additional protection eg. Nonce and link validity period
-    document = JobDocument.get(id=mongoengine.ObjectId(job_id))
+    document = JobDocument.objects.get(id=job_id)
     document.delete()
 
     return {"success": True}
@@ -45,5 +56,46 @@ def confirm_job(job_id: str):
     # document = JobDocument.get(id=job_id)
     # start_polling(...document)
     # TODO add nonce and/or other forms of validation
-    # TODO redirect to internshipper url and render success message there
-    return {"success": True}
+    document = JobDocument.objects.get(id=job_id)
+    if not document.confirmed:
+        document.confirmed = True
+        document.save()
+        return RedirectResponse("/")
+    else:
+        raise BadRequestException("Subscription already confirmed")
+
+
+def __try_send_confirmation_email(job: JobDocument):
+    try:
+        template = "confirm.html"
+        confirmation_link = __generate_confirmation_url(job)
+        response = ses_client.send_email(
+            Destination={
+                'ToAddresses': [job.email],
+            },
+            Message={
+                'Body': {
+                    'Html': {
+                        'Charset': 'UTF-8',
+                        'Data': create_html_email_from_template(template, confirmation_url=confirmation_link)
+                    },
+                    'Text': {
+                        'Charset': 'UTF-8',
+                        'Data': create_plaintext_email_from_template(template, confirmation_url=confirmation_link),
+                    },
+                },
+                'Subject': {
+                    'Charset': 'UTF-8',
+                    'Data': 'Confirm your subscription to internshipper.io',
+                },
+            },
+            Source="Test Source <eelis.kostiainen@gmail.com>",
+        )
+        logging.info("Email sent (id: {})".format(response['MessageId']))
+    except ClientError as e:
+        logging.error(e.response)
+        logging.error(e.response['Error']['Message'])
+
+
+def __generate_confirmation_url(job: JobDocument):
+    return "%s/jobs/confirm/%s" % (INTERNSHIPPER_APP_URL, job.id)

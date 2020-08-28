@@ -18,6 +18,7 @@ class Client:
         self.session.mount('https://', TLSAdapter())
         self.username = username
         self.password = password
+        self.identity = None
         self.authorization = None
 
     def login(self):

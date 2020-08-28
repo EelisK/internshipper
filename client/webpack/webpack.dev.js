@@ -8,7 +8,7 @@ module.exports = merge(base, {
     port: 3000,
     proxy: {
       "/jobs": {
-        target: "http://localhost:8080",
+        target: "http://localhost:8000",
         secure: false,
       },
     },

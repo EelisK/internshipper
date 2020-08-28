@@ -36,6 +36,9 @@ class Job(mongoengine.Document):
         self.created_at = datetime.datetime.now()
         self.user = encrypt(self.user)
         self.password = encrypt(self.password)
+        print("Got them options!")
+        print(self.options)
+        print(type(self.options))
         return super(Job, self).save(*args, **kwargs)
 
     def __format_request(self):

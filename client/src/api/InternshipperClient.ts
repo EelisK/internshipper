@@ -24,6 +24,7 @@ export class InternshipperClient implements HttpClient {
       credentials: "same-origin",
       headers: InternshipperClient.defaultHeaders,
       body: props.body && JSON.stringify(props.body),
+      method: props.method,
     });
     const response = await req.json();
     if (!req.ok) {

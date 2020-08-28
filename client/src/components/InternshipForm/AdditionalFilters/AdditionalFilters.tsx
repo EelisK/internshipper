@@ -11,7 +11,6 @@ export class AdditionalFilters extends React.PureComponent<Props> {
   render() {
     return (
       <CheckBox
-        required
         checked={this.props.options.exclude_advanced_students}
         label="Exclude advanced students"
         onChange={(event) =>

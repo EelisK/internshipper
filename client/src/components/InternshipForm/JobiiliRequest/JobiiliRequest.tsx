@@ -164,11 +164,14 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
         <FormField label="Minimum length of internship in weeks">
           <TextInput
             reverse
-            required
             type="number"
             icon={<History />}
             value={this.props.request.minLength}
-            onChange={this.getRequestPropertyChangeListener("minLength")}
+            onChange={(event) =>
+              this.partialUpdateRequest({
+                minLength: Number(event.target.value),
+              })
+            }
           />
         </FormField>
         <Box flex direction="row">

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Button, Grid } from "grommet";
+import { Button, Grid, Header, Box, Text } from "grommet";
+import { Plan, Technology } from "grommet-icons";
 import { InternshipperData, AdditionalRequestOptions } from "../../api/types";
 import { ReadableJobiiliRequest } from "./types";
 import { JobiiliRequest } from "./JobiiliRequest";
@@ -22,6 +23,19 @@ export class InternshipForm extends React.PureComponent<Props> {
   render() {
     return (
       <StyledForm onSubmit={this.props.onSubmit}>
+        <Header pad="large">
+          <Box direction="row" pad={{ horizontal: "large", vertical: "none" }}>
+            <Box pad="medium" flex="shrink" justify="center">
+              <Plan />
+            </Box>
+            <Box pad="medium">
+              <Text size="xlarge" color="brand">
+                Contact
+              </Text>
+              <Text>Fill in your information to receive updates</Text>
+            </Box>
+          </Box>
+        </Header>
         <Notification
           email={this.props.internshipSearchQuery.email}
           setUserContactInfo={this.props.updateInternshipQuery}
@@ -31,6 +45,25 @@ export class InternshipForm extends React.PureComponent<Props> {
           password={this.props.internshipSearchQuery.password}
           setCredentials={this.props.updateInternshipQuery}
         />
+
+        <Header pad="large">
+          <Box
+            direction="row"
+            pad={{ horizontal: "large", vertical: "xsmall" }}
+          >
+            <Box pad="medium" flex="shrink" justify="center">
+              <Technology />
+            </Box>
+            <Box pad="medium">
+              <Text size="large" color="brand">
+                Position
+              </Text>
+              <Text>
+                Create the criteria for your desired internship position
+              </Text>
+            </Box>
+          </Box>
+        </Header>
         <Grid
           areas={[
             // start: [column, row]
@@ -51,9 +84,10 @@ export class InternshipForm extends React.PureComponent<Props> {
             options={this.props.options}
             setAdditionalOptions={this.props.updateOptions}
           />
-
-          <Button primary type="submit" label="Find" />
         </Grid>
+        <Box pad={{ horizontal: "small", vertical: "xlarge" }}>
+          <Button primary type="submit" label="Find" />
+        </Box>
       </StyledForm>
     );
   }

@@ -1,11 +1,13 @@
 import * as React from "react";
+import { Main, Box } from "grommet";
 import { InternshipForm } from "../../InternshipForm";
-import { Main } from "grommet";
 
 export interface Props {}
 
 export const JobsPage: React.FC<Props> = () => (
-  <Main flex align="center" pad="large">
-    <InternshipForm />
+  <Main align="center" pad="large">
+    <Box pad="medium" elevation="medium" style={{ minHeight: "auto" }}>
+      <InternshipForm />
+    </Box>
   </Main>
 );

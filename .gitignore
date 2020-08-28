@@ -2,3 +2,5 @@ __pycache__/
 .vscode/
 *.pyc
 .aws/
+node_modules/
+dist/

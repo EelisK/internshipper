@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Select } from "grommet";
+import { getSearchableString } from "./util";
 
 export interface Props<T extends object> {
   options: T[];
@@ -38,6 +39,7 @@ export class MultiSelect<T extends object> extends React.PureComponent<
 
     return (
       <Select
+        plain
         multiple
         labelKey={labelKey}
         valueKey={valueKey}
@@ -48,8 +50,8 @@ export class MultiSelect<T extends object> extends React.PureComponent<
         // @ts-ignore
         options={options.filter((option) =>
           // @ts-ignore
-          this.getSearchableString(option[valueKey]).includes(
-            this.getSearchableString(this.state.search)
+          getSearchableString(option[valueKey]).includes(
+            getSearchableString(this.state.search)
           )
         )}
         messages={{
@@ -73,6 +75,4 @@ export class MultiSelect<T extends object> extends React.PureComponent<
     if (values.includes(option)) return values.filter((x) => x !== option);
     else return [...values, option];
   };
-
-  private getSearchableString = (search: string) => search.toLowerCase().trim();
 }

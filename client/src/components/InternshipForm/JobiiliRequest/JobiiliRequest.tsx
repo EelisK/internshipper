@@ -14,8 +14,6 @@ import {
   JobiiliLanguage,
   JobiiliDegreeTitle,
   JobiiliOrganization,
-  AdditionalRequestOptions,
-  InternshipSearch,
 } from "../../../api/types";
 import {
   AVAILABLE_LANGUAGES,
@@ -37,6 +35,7 @@ import {
   Workshop,
 } from "grommet-icons";
 import { MultiSelect } from "../../MultiSelect";
+import { isMetaClassification } from "../util";
 
 export interface Props {
   request: ReadableJobiiliRequest;
@@ -105,6 +104,12 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
               this.partialUpdateRequest({ jobClasses })
             }
             getChanges={this.getClassificationChanges}
+            formatMultiple={(values) =>
+              values
+                .filter((klass) => !isMetaClassification(klass))
+                .map((klass) => klass.name)
+                .join(" ,")
+            }
           />
         </FormField>
         <FormField label="Employee">
@@ -273,8 +278,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
   }
 
   private getClassificationChanges = (option: JobiiliDegreeTitle) => {
-    const isMetaClassification = option.misc !== null;
-    const classificationsInThisOption = isMetaClassification
+    const classificationsInThisOption = isMetaClassification(option)
       ? option.misc.jobClasses.map((jobId) =>
           AVAILABLE_PRACTICE_CLASSIFICATIONS.find((job) => job.id === jobId)
         )
@@ -284,6 +288,14 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
       this.props.request.jobClasses,
       (x) => x.id
     );
+
+    if (newClassifications.length === 0)
+      return differenceBy(
+        this.props.request.jobClasses,
+        classificationsInThisOption,
+        (x) => x.id
+      );
+
     return [...this.props.request.jobClasses, ...newClassifications];
   };
 

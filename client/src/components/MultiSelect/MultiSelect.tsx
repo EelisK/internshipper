@@ -9,6 +9,7 @@ export interface Props<T extends object> {
   valueKey: string;
   setValues: (values: T[]) => any;
   getChanges?: (option: T) => T[];
+  formatMultiple?: (values: T[]) => string;
   disableSearch?: boolean;
   icon?: React.ReactNode;
 }
@@ -56,10 +57,9 @@ export class MultiSelect<T extends object> extends React.PureComponent<
           )
         )}
         messages={{
-          multiple: values
-            // @ts-ignore
-            .map((value) => value[valueKey])
-            .join(", "),
+          multiple: (this.props.formatMultiple || this.defaultGetMessage)(
+            values
+          ),
         }}
         value={values}
         onChange={({ option }: { option: T }) => {
@@ -76,4 +76,10 @@ export class MultiSelect<T extends object> extends React.PureComponent<
     if (values.includes(option)) return values.filter((x) => x !== option);
     else return [...values, option];
   };
+
+  private defaultGetMessage = (values: T[]): string =>
+    values
+      // @ts-ignore
+      .map((value) => value[this.props.valueKey])
+      .join(", ");
 }

@@ -1,5 +1,5 @@
 import { ReadableJobiiliRequest } from "./types";
-import { JobiiliRequest } from "../../api/types";
+import { JobiiliRequest, JobiiliDegreeTitle } from "../../api/types";
 
 export const transformReadableJobiiliRequest = (
   readableRequest: ReadableJobiiliRequest
@@ -20,3 +20,6 @@ export const transformReadableJobiiliRequest = (
   };
   return request;
 };
+
+export const isMetaClassification = (klass: JobiiliDegreeTitle) =>
+  klass.misc !== null;

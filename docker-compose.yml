@@ -38,5 +38,20 @@ services:
     volumes:
       - mongodb_data:/data/db
 
+  nginx:
+    build:
+      context: .
+    ports:
+      - 4433:443
+    depends_on:
+      - web
+    environment:
+      BACKEND_HOST: web
+    volumes:
+      - ./client/dist:/srv/app/client/dist
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/dev.key:/etc/nginx/internshipper.io.key
+      - ./docker/nginx/dev.crt:/etc/nginx/internshipper.io.crt
+
 volumes:
   mongodb_data:

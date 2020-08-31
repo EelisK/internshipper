@@ -20,6 +20,7 @@ def poll_jobs(job: db.Job):
     try:
         client = jobiili.Client(crypto.decrypt(
             job.user), crypto.decrypt(job.password))
+        client.login()
         jobs = client.get_jobs(job.request)
         curr_jobs = apply_custom_options(jobs, job.options)
         [__inform_new_job(new_job, job)

@@ -2,7 +2,8 @@ version: "3.7"
 services:
   web:
     build:
-      context: .
+      context: ./server
+      dockerfile: Dockerfile
     environment:
       PORT: 8000
       ENV: development
@@ -12,7 +13,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - .:/srv/app
+      - ./server:/srv/app
     depends_on:
       - mongodb
     command:

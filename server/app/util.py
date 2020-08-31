@@ -23,9 +23,9 @@ def poll_jobs(job: db.Job):
         client.login()
         jobs = client.get_jobs(job.request)
         curr_jobs = apply_custom_options(jobs, job.options)
-        [__inform_new_job(new_job, job)
-         for new_job in __extract_new_jobs(job.found_jobs, curr_jobs)]
-        if len(jobs) != 0:
+        new_jobs = __extract_new_jobs(job.found_jobs, curr_jobs)
+        if len(new_jobs) != 0:
+            __inform_new_jobs(new_jobs, job)
             job.update(found_jobs=[*job.found_jobs, *jobs])
         logging.info("{} Poll complete for job {}".format(
             datetime.datetime.utcnow(), job.id))
@@ -63,9 +63,9 @@ def __extract_new_jobs(prev_list, curr_list):
     return list(filter(lambda job: job["id"] in new_ids, curr_list))
 
 
-def __inform_new_job(job_from_jobiili: dict, job: db.Job):
+def __inform_new_jobs(jobs: list, job: db.Job):
     try:
-        template = "new_job.html"
+        template = "new_jobs.html"
         response = ses_client.send_email(
             Destination={
                 'ToAddresses': [job.email],
@@ -74,11 +74,11 @@ def __inform_new_job(job_from_jobiili: dict, job: db.Job):
                 'Body': {
                     'Html': {
                         'Charset': 'UTF-8',
-                        'Data': create_html_email_from_template(template, **job_from_jobiili),
+                        'Data': create_html_email_from_template(template, jobs=jobs),
                     },
                     'Text': {
                         'Charset': 'UTF-8',
-                        'Data': create_plaintext_email_from_template(template, **job_from_jobiili),
+                        'Data': create_plaintext_email_from_template(template, jobs=jobs),
                     },
                 },
                 'Subject': {

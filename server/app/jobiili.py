@@ -3,8 +3,9 @@ import os
 import datetime
 import bs4
 import json
-from exceptions import UnauthorizedException, ForbiddenException
-from adapters import TLSAdapter
+
+from app.exceptions import UnauthorizedException, ForbiddenException
+from app.adapters import TLSAdapter
 
 
 BASE_URL = "https://www.jobiili.fi"

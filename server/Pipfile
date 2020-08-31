@@ -23,6 +23,7 @@ boto3 = "*"
 Jinja2 = "*"
 html2text = "*"
 fastapi-utils = "*"
+celery = "*"
 
 [requires]
 python_version = "3.8.2"

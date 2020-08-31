@@ -1,0 +1,61 @@
+{
+  "plugins": ["@typescript-eslint", "prettier", "react"],
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "no-console": "warn",
+    "react/prop-types": "off",
+    "func-style": ["warn", "expression"],
+    "no-unused-vars": ["warn", { "ignoreRestSiblings": true }],
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "object": false
+        },
+        "extendDefaults": true
+      }
+    ],
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "ignoreRestSiblings": true }
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "one-var": ["error", "never"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

@@ -1,15 +1,5 @@
-FROM python:3.8.2 AS builder
-
-WORKDIR /srv/app
-
-COPY .aws/ /root/.aws
-
-COPY Pipfile Pipfile.lock ./
-
-RUN python -m pip install --upgrade pip
-RUN pip install pipenv
-RUN pipenv install --system --deploy --ignore-pipfile
-
-EXPOSE ${PORT}
-
-COPY . .
+FROM nginx:1.19.2-alpine
+ENV BACKEND_SERVER=web:8000
+COPY --chown=nginx:nginx ./client /srv/app/client
+COPY --chown=nginx:nginx ./nginx/nginx.conf.template /etc/nginx/nginx.conf.template
+RUN envsubst '${BACKEND_SERVER}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf

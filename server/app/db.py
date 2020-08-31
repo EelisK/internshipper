@@ -21,6 +21,7 @@ class Job(mongoengine.Document):
     email = mongoengine.StringField(required=True)
     request = mongoengine.DictField(required=True)
     created_at = mongoengine.DateTimeField()
+    confirmed = mongoengine.BooleanField(required=True, default=False)
     # Array where found jobs for this request are kept
     # TODO add separate collection for this
     found_jobs = mongoengine.ListField(null=False, default=[])
@@ -36,10 +37,7 @@ class Job(mongoengine.Document):
         self.created_at = datetime.datetime.now()
         self.user = encrypt(self.user)
         self.password = encrypt(self.password)
-        print("Got them options!")
-        print(self.options)
-        print(type(self.options))
-        return super(Job, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def __format_request(self):
         with open('./app/request_schema.json', 'r') as schema:

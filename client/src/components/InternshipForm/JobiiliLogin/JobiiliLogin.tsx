@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UserCredentials } from "../../../api/types";
-import { TextInput, FormField, Form, Grid, Box } from "grommet";
+import { TextInput, FormField, Grid, Box } from "grommet";
 import { User, Lock } from "grommet-icons";
 
 export interface Props extends UserCredentials {

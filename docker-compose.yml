@@ -2,17 +2,18 @@ version: "3.7"
 services:
   web:
     build:
-      context: .
+      context: ./server
     environment:
       PORT: 8000
       ENV: development
       MONGODB_URL: mongodb://root:root@mongodb:27017/?authSource=admin
+      INTERNSHIPPER_APP_URL: http://localhost:8000
       DATABASE_NAME: internshipper-dev
       ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
     ports:
       - 8000:8000
     volumes:
-      - .:/srv/app
+      - ./server:/srv/app
     depends_on:
       - mongodb
     command:
@@ -36,6 +37,17 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - mongodb_data:/data/db
+
+  nginx:
+    build:
+      context: .
+    ports:
+      - 4433:443
+    depends_on:
+      - web
+    volumes:
+      - ./docker/nginx/dev.key:/etc/nginx/internshipper.io.key
+      - ./docker/nginx/dev.crt:/etc/nginx/internshipper.io.crt
 
 volumes:
   mongodb_data:

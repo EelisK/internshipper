@@ -3,7 +3,7 @@ import os
 import datetime
 import bs4
 import json
-from exceptions import InvalidCredentials, AuthenticationException
+from exceptions import UnauthorizedException, ForbiddenException
 from adapters import TLSAdapter
 
 
@@ -18,6 +18,7 @@ class Client:
         self.session.mount('https://', TLSAdapter())
         self.username = username
         self.password = password
+        self.identity = None
         self.authorization = None
 
     def login(self):
@@ -33,7 +34,7 @@ class Client:
         response = requests.get(API_URL + "/Jobs/search?query=" + json.dumps(payload), headers={
                                 "authorization": self.authorization, "Content-Type": "application/json"})
         if response.status_code != 200:
-            raise AuthenticationException()
+            raise ForbiddenException()
         return response.json()
 
     def __initialize_session_for_login(self):
@@ -56,9 +57,9 @@ class Client:
         response.raise_for_status()
         response_text = response.text
         if "The password you entered was incorrect." in response_text:
-            raise InvalidCredentials("Incorrect password")
+            raise UnauthorizedException("Incorrect password")
         if "The username you entered cannot be identified." in response_text:
-            raise InvalidCredentials("Incorrect username.")
+            raise UnauthorizedException("Incorrect username.")
         return response
 
     def __invoke_successful_idp_login_callback(self, idp_login_response):

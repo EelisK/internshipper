@@ -7,6 +7,7 @@ services:
       PORT: 8000
       ENV: development
       MONGODB_URL: mongodb://root:root@mongodb:27017/?authSource=admin
+      INTERNSHIPPER_APP_URL: http://localhost:8000
       DATABASE_NAME: internshipper-dev
       ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
     ports:

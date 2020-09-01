@@ -16,8 +16,6 @@ services:
 
   web:
     <<: *server
-    build:
-      context: ./server
     environment:
       <<: *server_env
       PORT: 8000

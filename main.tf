@@ -19,4 +19,19 @@ resource "aws_eip_association" "eip_assoc" {
 resource "aws_instance" "web" {
   ami           = var.ami
   instance_type = "t2.micro"
+
+  tags          = {
+    Name        = "internshipper-web"
+    Environment = "production"
+  }
+}
+
+resource "aws_instance" "worker" {
+  ami           = var.ami
+  instance_type = "t2.micro"
+
+  tags          = {
+    Name        = "internshipper-worker"
+    Environment = "production"
+  }
 }

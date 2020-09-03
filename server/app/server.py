@@ -34,7 +34,7 @@ def register(job: CreateJob):
     try:
         document.save()
         __try_send_confirmation_email(document)
-        return {"success": True, "result": document.to_dict(), "identity": client.identity}
+        return {"success": True, "identity": client.identity}
     except Exception as e:
         logging.error("Exception in job creation")
         logging.error(e)

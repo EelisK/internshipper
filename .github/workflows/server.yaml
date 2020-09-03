@@ -21,6 +21,7 @@ jobs:
       - name: Create deployment
         run: |
           aws deploy create-deployment \
+            --file-exists-behavior OVERWRITE \
             --application-name internshipper \
             --deployment-group-name production-server \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}

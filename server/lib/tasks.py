@@ -1,3 +1,4 @@
+import lib.setup
 import os
 import logging
 import datetime

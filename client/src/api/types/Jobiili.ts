@@ -5,7 +5,7 @@ export interface JobiiliRequest {
   jobTargetDegrees: number[];
   languages: JobiiliLanguage[];
   regions: string[];
-  municipalities: JobiiliMunicipality[];
+  municipalities: string[];
   organization: number | null;
   page: number; // TODO: backend counterpart
   startDate: string;

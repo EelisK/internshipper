@@ -13,7 +13,7 @@ from app.db import Job as JobDocument
 
 
 app = Celery('tasks', broker=os.environ['RABBITMQ_URI'])
-POLLING_INTERVAL = 10.0
+POLLING_INTERVAL = 60.0
 
 app.conf.update(
     task_serializer='json',

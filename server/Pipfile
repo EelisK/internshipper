@@ -22,7 +22,6 @@ botocore = "*"
 boto3 = "*"
 Jinja2 = "*"
 html2text = "*"
-fastapi-utils = "*"
 celery = "*"
 dnspython = "*"
 

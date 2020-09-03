@@ -16,4 +16,5 @@ python3 -m pip install --upgrade pip
 # Install dependencies
 pip3 install pipenv
 # pipenv install --system --deploy --ignore-pipfile
+cd /srv/app/server
 pipenv install

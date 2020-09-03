@@ -1,9 +1,10 @@
-name: Provision
+name: Client
 
 on:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   build_and_deploy:
@@ -17,9 +18,19 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
-      - name: Build static content
+      - name: Install dependencies
         working-directory: ./client
-        run: yarn install --frozen-lockfile --link-duplicates --silent && yarn run build
-      - name: Deploy static site to S3 bucket
+        run: yarn install --frozen-lockfile --link-duplicates --silent
+      - name: Run tests
         working-directory: ./client
+        run: yarn run test
+      - name: Run linter
+        working-directory: ./client
+        run: yarn run lint
+      - name: Run build
+        working-directory: ./client
+        run: yarn run build
+      - name: Deploy to s3
+        working-directory: ./client
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: aws s3 sync ./dist/ s3://internshipper-static --delete

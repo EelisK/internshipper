@@ -35,7 +35,9 @@ def register(job: CreateJob):
         document.save()
         __try_send_confirmation_email(document)
         return {"success": True, "result": document.to_dict(), "identity": client.identity}
-    except:
+    except Exception as e:
+        logging.error("Exception in job creation")
+        logging.error(e)
         raise BadRequestException("Jobiili request was likely malformed")
 
 

@@ -1,4 +1,7 @@
 #!/bin/bash
 
 # TODO: better shutdown logic
-kill -9 $(pgrep celery)
+workers=$(pgrep celery)
+if [ -n "${workers}" ]; then
+    kill -9 $workers
+fi

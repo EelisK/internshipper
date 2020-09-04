@@ -1,4 +1,4 @@
-FROM python:3.8.2 AS builder
+FROM python:3.8 AS builder
 
 WORKDIR /srv/app
 

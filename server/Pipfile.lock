@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "713bc67b87fa76940714ef183a4124557fcabdaec7ef42947346fcb7347897e2"
+            "sha256": "ddbf644439aeff0cbdae892295d6695003e9aa9061af80820c2a65e35483c009"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.8.2"
+            "python_version": "3.8"
         },
         "sources": [
             {
@@ -47,19 +47,19 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:4196b418598851ffd10cf9d1606694673cbfeca4ddf8b25d4e50addbd2fc60bf",
-                "sha256:69ad8f2184979e223e12ee3071674fdf910983cf9f4d6f34f7ec407b089064b5"
+                "sha256:3ddc9c3b272d2351b69667974a1897538408b24b5427c87123a6f51933164d6d",
+                "sha256:bb3dfd837238a134094d430a0214f68597cb6fb4fcecf2f54690917c3dbcbb05"
             ],
             "index": "pypi",
-            "version": "==1.14.54"
+            "version": "==1.14.55"
         },
         "botocore": {
             "hashes": [
-                "sha256:6fe05837646447d61acdaf1e3401b92cd9309f00b19c577a50d0ade7735a3403",
-                "sha256:9e493a21e6a8d45c631eb2952ae8e1d0a31b9984546d4268ea10c0c33e2435ce"
+                "sha256:0c68c2f961d06980849078ba702645441fbc060de1fc9884e514838e90fd2a76",
+                "sha256:68458e5453af8ac97ecd5768d6193358889b578cefb33a1a22c7265380ae407f"
             ],
             "index": "pypi",
-            "version": "==1.17.54"
+            "version": "==1.17.55"
         },
         "bs4": {
             "hashes": [
@@ -563,10 +563,10 @@
         },
         "isort": {
             "hashes": [
-                "sha256:60a1b97e33f61243d12647aaaa3e6cc6778f5eb9f42997650f1cc975b6008750",
-                "sha256:d488ba1c5a2db721669cc180180d5acf84ebdc5af7827f7aaeaa75f73cf0e2b8"
+                "sha256:0906e0e7092e060c05de709ad172e1ec1b26aa27fdd4e8093f257890cd881d18",
+                "sha256:8103bc070d9258fe97e82470cb30f0e4b730e94c44ac81ebae32b05d5a6c87ea"
             ],
-            "version": "==5.4.2"
+            "version": "==5.5.0"
         },
         "lazy-object-proxy": {
             "hashes": [

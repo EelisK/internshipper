@@ -8,13 +8,13 @@ apt install python3.8 -y
 apt-get install python3.8-distutils -y
 apt-get install python3.8-gdbm -y
 ln -sf /usr/bin/python3.8 /usr/bin/python3
+apt-get install python3-venv -y
 
-# Install pip
+# Install pip and pipenv
 curl https://bootstrap.pypa.io/get-pip.py | python3 -
 python3 -m pip install --upgrade pip
+pip3 install pipenv
 
 # Install dependencies
-pip3 install pipenv
-# pipenv install --system --deploy --ignore-pipfile
 cd /srv/app/server
-pipenv install
+pipenv install --system --deploy --ignore-pipfile

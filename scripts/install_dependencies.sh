@@ -17,4 +17,4 @@ pip3 install pipenv
 
 # Install dependencies
 cd /srv/app/server
-pipenv install --system --deploy --ignore-pipfile
+pipenv install

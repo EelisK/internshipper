@@ -14,7 +14,3 @@ apt-get install python3-venv -y
 curl https://bootstrap.pypa.io/get-pip.py | python3 -
 python3 -m pip install --upgrade pip
 pip3 install pipenv
-
-# Install dependencies
-cd /srv/app/server
-pipenv install

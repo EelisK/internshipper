@@ -22,7 +22,11 @@ botocore = "*"
 boto3 = "*"
 Jinja2 = "*"
 html2text = "*"
-fastapi-utils = "*"
+celery = "*"
+dnspython = "*"
 
 [requires]
-python_version = "3.8.2"
+python_version = "3.8"
+
+[packages.pymongo]
+extras = [ "srv",]

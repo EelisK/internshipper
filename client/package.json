@@ -8,7 +8,7 @@
     "start": "yarn start:dev",
     "start:dev": "webpack-dev-server --open --config webpack/webpack.dev.js",
     "build": "webpack --mode production --config webpack/webpack.prod.js",
-    "test": "echo \"No test implemented yet && exit 1\"",
+    "test": "echo \"No test implemented yet\"",
     "lint": "eslint -c .eslintrc \"src/**/*.+(js|ts)?(x)\""
   },
   "dependencies": {

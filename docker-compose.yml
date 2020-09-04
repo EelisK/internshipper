@@ -1,31 +1,33 @@
 version: "3.7"
 services:
-  web:
+  server: &server
     build:
       context: ./server
-    environment:
-      PORT: 8000
+    environment: &server_env
       ENV: development
       MONGODB_URL: mongodb://root:root@mongodb:27017/?authSource=admin
       INTERNSHIPPER_APP_URL: http://localhost:8000
       DATABASE_NAME: internshipper-dev
       ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
+      RABBITMQ_URI: amqp://guest:guest@rabbitmq:5672/?heartbeat=2
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+  web:
+    <<: *server
+    environment:
+      <<: *server_env
+      PORT: 8000
     ports:
       - 8000:8000
     volumes:
       - ./server:/srv/app
-    depends_on:
-      - mongodb
-    command:
-      [
-        "uvicorn",
-        "server:app",
-        "--reload",
-        "--app-dir",
-        "app",
-        "--host",
-        "0.0.0.0",
-      ]
+    command: ["uvicorn", "app.server:app", "--reload", "--host", "0.0.0.0"]
+
+  worker:
+    <<: *server
+    command: ["celery", "-A", "lib.tasks", "worker", "-B", "-l", "info"]
 
   mongodb:
     image: mongo:4.2
@@ -48,6 +50,9 @@ services:
     volumes:
       - ./docker/nginx/dev.key:/etc/nginx/internshipper.io.key
       - ./docker/nginx/dev.crt:/etc/nginx/internshipper.io.crt
+
+  rabbitmq:
+    image: rabbitmq:3.7-management-alpine
 
 volumes:
   mongodb_data:

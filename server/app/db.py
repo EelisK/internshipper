@@ -4,7 +4,7 @@ import datetime
 import mongoengine
 
 from jsonschema import Draft4Validator, validators
-from crypto import encrypt
+from app.crypto import encrypt
 
 __DATABASE_NAME = os.environ.get('DATABASE_NAME')
 __DATABASE_URL = os.environ.get('MONGODB_URL')
@@ -38,6 +38,12 @@ class Job(mongoengine.Document):
         self.user = encrypt(self.user)
         self.password = encrypt(self.password)
         return super().save(*args, **kwargs)
+
+    def to_dict(self):
+        dict_value = json.loads(self.to_json())
+        dict_value['id'] = dict_value['_id']['$oid']
+        del dict_value['_id']
+        return dict_value
 
     def __format_request(self):
         with open('./app/request_schema.json', 'r') as schema:

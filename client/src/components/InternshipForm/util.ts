@@ -9,6 +9,7 @@ export const transformReadableJobiiliRequest = (
     organization,
     jobTargetDegrees,
     jobClasses,
+    municipalities,
     ...partialRequest
   } = readableRequest;
   const request: JobiiliRequest = {
@@ -17,6 +18,7 @@ export const transformReadableJobiiliRequest = (
     organization: organization?.id,
     jobTargetDegrees: jobTargetDegrees.map((x) => x.id),
     jobClasses: jobClasses.map((x) => x.id),
+    municipalities: municipalities.map((x) => x.name),
   };
   return request;
 };

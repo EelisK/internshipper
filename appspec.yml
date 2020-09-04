@@ -1,0 +1,24 @@
+version: 0.0
+os: linux
+files:
+  - source: ./server
+    destination: /srv/app
+hooks:
+  BeforeInstall:
+    - location: server/scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: server/scripts/setup_env.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: server/scripts/start_server.sh
+    - location: server/scripts/start_worker.sh
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: server/scripts/stop_server.sh
+    - location: server/scripts/stop_worker.sh
+      timeout: 300
+      runas: root

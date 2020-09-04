@@ -1,16 +1,18 @@
+import lib.setup
+
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from fastapi_utils.tasks import repeat_every
+from botocore.exceptions import ClientError
+from typing import Iterable
 
-from util import poll_jobs, ses_client, \
+from lib.tasks import app as celery_app, POLLING_INTERVAL, perform_job_polling
+from app.exceptions import BadRequestException
+from app.jobiili import Client as JobiiliClient
+from app.util import ses_client, \
     create_html_email_from_template, \
     create_plaintext_email_from_template
-from botocore.exceptions import ClientError
-from exceptions import BadRequestException
-from jobiili import Client as JobiiliClient
-from models import CreateJob
-from db import Job as JobDocument
-from typing import Iterable
+from app.models import CreateJob
+from app.db import Job as JobDocument
 
 import mongoengine
 import logging
@@ -23,13 +25,6 @@ INTERNSHIPPER_APP_URL = os.environ.get(
     "INTERNSHIPPER_APP_URL", "https://internshipper.io")
 
 
-@app.on_event("startup")
-@repeat_every(seconds=10, wait_first=True)
-def perform_job_polling():
-    for job in JobDocument.objects(confirmed=True):
-        poll_jobs(job)
-
-
 @app.post("/jobs")
 def register(job: CreateJob):
     client = JobiiliClient(job.user, job.password)
@@ -39,8 +34,10 @@ def register(job: CreateJob):
     try:
         document.save()
         __try_send_confirmation_email(document)
-        return {"success": True, "result": json.loads(document.to_json()), "identity": client.identity}
-    except:
+        return {"success": True, "identity": client.identity}
+    except Exception as e:
+        logging.error("Exception in job creation")
+        logging.error(e)
         raise BadRequestException("Jobiili request was likely malformed")
 
 
@@ -64,7 +61,8 @@ def confirm_job(job_id: str):
     document = JobDocument.objects.get(id=job_id)
     if not document.confirmed:
         document.update(confirmed=True)
-        # tasks.schedule_job(document)
+        celery_app.add_periodic_task(
+            POLLING_INTERVAL, perform_job_polling.s(document), name='fetch_job')
         return RedirectResponse("/")
     else:
         raise BadRequestException("Subscription already confirmed")

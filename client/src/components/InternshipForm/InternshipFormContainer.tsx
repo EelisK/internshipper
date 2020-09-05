@@ -20,6 +20,8 @@ export interface State {
   options: AdditionalRequestOptions;
 }
 
+const twoWeeks = 14 * 24 * 60 * 60 * 1000;
+
 const getInitialState = (): State => ({
   request: {
     orderBy: "publicationDate",
@@ -35,7 +37,7 @@ const getInitialState = (): State => ({
     organization: null,
 
     endDate: new Date().toISOString(),
-    startDate: new Date().toISOString(),
+    startDate: new Date(new Date().getTime() + twoWeeks).toISOString(),
 
     jobClasses: [],
     municipalities: [],

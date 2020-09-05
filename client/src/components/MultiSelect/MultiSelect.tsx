@@ -80,6 +80,6 @@ export class MultiSelect<T extends object> extends React.PureComponent<
   private defaultGetMessage = (values: T[]): string =>
     values
       // @ts-ignore
-      .map((value) => value[this.props.valueKey])
+      .map((value) => value[this.props.labelKey])
       .join(", ");
 }

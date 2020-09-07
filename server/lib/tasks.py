@@ -42,9 +42,14 @@ def perform_job_polling(job_dict: dict):
     new_jobs = __extract_new_jobs(job.found_jobs, curr_jobs)
     if len(new_jobs) != 0:
         job.update(found_jobs=[*job.found_jobs, *jobs])
-        email_sender = EmailSender("new_jobs.html", jobs=jobs)
+        email_sender = EmailSender("new_jobs.html")
+        template_params = {"jobs": jobs}
         email_sender.send_email(
-            job["email"], "Test Source <eelis.kostiainen@gmail.com>", "New Internship Position")
+            email_to=job["email"],
+            email_from="Test Source <eelis.kostiainen@gmail.com>",
+            subject="New Internship Position",
+            template_params=template_params
+        )
     logging.info("{} Poll complete for job {}".format(
         datetime.datetime.utcnow(), job["id"]))
 

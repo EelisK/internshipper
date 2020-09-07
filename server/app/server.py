@@ -37,10 +37,15 @@ def register(job: CreateJob):
                            password=job.password, user=job.user, options=job.options)
     try:
         document.save()
-        email_sender = EmailSender(
-            "confirm.html", confirmation_link=__generate_confirmation_url(document))
-        email_sender.send_email(document.email, "Test Source <eelis.kostiainen@gmail.com>",
-                                "Confirm your subscription to internshipper.io")
+        email_sender = EmailSender("confirm.html")
+        template_params = {
+            "confirmation_link": __generate_confirmation_url(document)}
+        email_sender.send_email(
+            email_to=document.email,
+            email_from="Test Source <eelis.kostiainen@gmail.com>",
+            subject="Confirm your subscription to internshipper.io",
+            template_params=template_params
+        )
         return {"success": True, "identity": client.identity}
     except Exception as e:
         logging.error("Exception in job creation")

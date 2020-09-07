@@ -299,13 +299,6 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
     return [...this.props.request.jobClasses, ...newClassifications];
   };
 
-  private getRequestPropertyChangeListener = (
-    property: keyof ReadableJobiiliRequest
-  ) => (event: React.ChangeEvent<any>) =>
-    this.partialUpdateRequest({
-      [property]: event.target.value,
-    });
-
   private partialUpdateRequest = (update: Partial<ReadableJobiiliRequest>) =>
     this.props.setRequest({ ...this.props.request, ...update });
 

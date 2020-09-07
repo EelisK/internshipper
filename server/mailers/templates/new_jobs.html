@@ -14,6 +14,11 @@
       length }} potential match{% if jobs | length > 1 %}es{% endif %}!
     </p>
 
+    <p>
+      You can delete this subscription by clicking the following link: <a href="{{ delete_link }}">{{ delete_link }}</a>.
+      When you do this, all data related to the subscription will be deleted.
+    </p>
+
     {% for job in jobs %}
     <p>
       <a href="https://jobiili.fi/#/job/{{ job["id"] }}"

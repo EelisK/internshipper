@@ -9,11 +9,11 @@ from celery import Celery
 from app import crypto
 from app.jobiili import Client as JobiiliClient
 from app.db import Job as JobDocument
+from lib.config import INTERNSHIPPER_APP_URL, POLLING_INTERVAL
 from mailers.sender import Sender as EmailSender
 
 
 app = Celery('tasks', broker=os.environ['RABBITMQ_URI'])
-POLLING_INTERVAL = 60.0
 
 app.conf.update(
     task_serializer='json',
@@ -43,7 +43,10 @@ def perform_job_polling(job_dict: dict):
     if len(new_jobs) != 0:
         job.update(found_jobs=[*job.found_jobs, *jobs])
         email_sender = EmailSender("new_jobs.html")
-        template_params = {"jobs": jobs}
+        template_params = {
+            "jobs": jobs,
+            "delete_link": __generate_delete_url(job)
+        }
         email_sender.send_email(
             email_to=job.email,
             email_from="Internshipper.io <no-reply@internshipper.io>",
@@ -66,6 +69,10 @@ def __extract_new_jobs(prev_list, curr_list):
     curr_ids = map(lambda job: job["id"], curr_list)
     new_ids = [x for x in curr_ids if x not in prev_ids]
     return list(filter(lambda job: job["id"] in new_ids, curr_list))
+
+
+def __generate_delete_url(job: JobDocument):
+    return "%s/jobs/delete/%s" % (INTERNSHIPPER_APP_URL, job.id)
 
 
 if __name__ == '__main__':

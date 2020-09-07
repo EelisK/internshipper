@@ -91,9 +91,10 @@ class ServerTest(unittest.TestCase):
 
     def test_delete_jobs(self):
         mock_job = self.create_mock_job()
-        response = self.client.get("/jobs/delete/%s" % mock_job.id)
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual({"success": True}, response.json())
+        response = self.client.get("/jobs/delete/%s" %
+                                   mock_job.id, allow_redirects=False)
+        self.assertEqual(response.status_code, 307)
+        self.assertEqual(response.headers, {"location": "/"})
 
     def test_delete_jobs_not_found(self):
         non_existant_id = "555555555555555555555555"

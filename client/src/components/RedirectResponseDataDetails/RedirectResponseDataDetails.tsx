@@ -1,12 +1,8 @@
 import * as React from "react";
-import { formatDistance } from "date-fns";
-import {
-  RedirectResponseData,
-  DeleteRedirectResponseData,
-  ConfirmRedirectResponseData,
-} from "../../api/types";
-import { Box, Text, Button, Anchor } from "grommet";
+import { RedirectResponseData } from "../../api/types";
+import { Box, Text, Button } from "grommet";
 import { Info, Close } from "grommet-icons";
+import { RedirectResponseDataDetailsDescription } from "./Description";
 
 export interface Props {
   data: RedirectResponseData;
@@ -52,50 +48,3 @@ export const RedirectResponseDataDetails: React.FC<Props> = ({
     </Box>
   </Box>
 );
-
-export const DeleteRedirectResponseDataDetailsDescription: React.FC<{
-  data: DeleteRedirectResponseData;
-}> = ({ data }) => (
-  <>
-    <Text>
-      Job search stopped. Found overall {data.payload.found_jobs.length} jobs
-      matching the provided criteria. This search lasted{" "}
-      <Text weight="bold">
-        {formatDistance(new Date(), new Date(data.payload.created_at))}.
-      </Text>{" "}
-      {data.payload.found_jobs.length !== 0 &&
-        "Hopefully at least one of them was suitable for you."}{" "}
-    </Text>
-    <Text>
-      The data related to this search has now been deleted from the
-      internshipper.io platform.
-    </Text>
-  </>
-);
-
-export const ConfirmRedirectResponseDataDetailsDescription: React.FC<{
-  data: ConfirmRedirectResponseData;
-}> = ({ data }) => (
-  <Text>
-    You have now confirmed your subscription for internship positions. Note that
-    you may stop receiving these updates at any time by clicking{" "}
-    <Text color="brand">
-      <Anchor href={`/jobs/delete/${data.payload.id}`} label="this link" />
-    </Text>
-    . This link will be included in the subsequent emails, so you don't need
-    worry about saving it for now.
-  </Text>
-);
-
-export const RedirectResponseDataDetailsDescription: React.FC<{
-  data: RedirectResponseData;
-}> = ({ data }) => {
-  switch (data.action) {
-    case "CONFIRM_JOB":
-      return <ConfirmRedirectResponseDataDetailsDescription data={data} />;
-    case "DELETE_JOB":
-      return <DeleteRedirectResponseDataDetailsDescription data={data} />;
-    default:
-      throw new Error("Unexpected data provided in redirect response");
-  }
-};

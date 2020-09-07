@@ -5,20 +5,20 @@ services:
       context: ./server
     environment: &server_env
       ENV: development
-      MONGODB_URL: mongodb://root:root@mongodb:27017/?authSource=admin
+      MONGODB_URL: mongodb://root:root@mongodb-dev:27017/?authSource=admin
       INTERNSHIPPER_APP_URL: http://localhost:8000
       DATABASE_NAME: internshipper-dev
       ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
-      RABBITMQ_URI: amqp://guest:guest@rabbitmq:5672/?heartbeat=2
-    depends_on:
-      - mongodb
-      - rabbitmq
+      RABBITMQ_URI: amqp://guest:guest@rabbitmq-dev:5672/?heartbeat=2
 
   web:
     <<: *server
     environment:
       <<: *server_env
       PORT: 8000
+    depends_on:
+      - mongodb-dev
+      - rabbitmq-dev
     ports:
       - 8000:8000
     volumes:
@@ -27,9 +27,12 @@ services:
 
   worker:
     <<: *server
+    depends_on:
+      - mongodb-dev
+      - rabbitmq-dev
     command: ["celery", "-A", "lib.tasks", "worker", "-B", "-l", "info"]
 
-  mongodb:
+  mongodb-dev:
     image: mongo:4.2
     restart: always
     ports:
@@ -51,7 +54,31 @@ services:
       - ./docker/nginx/dev.key:/etc/nginx/internshipper.io.key
       - ./docker/nginx/dev.crt:/etc/nginx/internshipper.io.crt
 
-  rabbitmq:
+  rabbitmq-dev:
+    image: rabbitmq:3.7-management-alpine
+
+  test-server:
+    <<: *server
+    environment:
+      <<: *server_env
+      ENV: test
+      MONGODB_URL: mongodb://root:root@mongodb-test:27017/?authSource=admin
+      INTERNSHIPPER_APP_URL: http://localhost:8000
+      DATABASE_NAME: internshipper-dev
+      ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
+      RABBITMQ_URI: amqp://guest:guest@rabbitmq-test:5672/?heartbeat=2
+    depends_on:
+      - rabbitmq-test
+      - mongodb-test
+    command: ["python", "-m", "unittest", "discover", "./spec"]
+
+  mongodb-test:
+    image: mongo:4.2
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  rabbitmq-test:
     image: rabbitmq:3.7-management-alpine
 
 volumes:

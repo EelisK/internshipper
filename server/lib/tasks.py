@@ -49,7 +49,7 @@ def perform_job_polling(job_dict: dict):
         }
         email_sender.send_email(
             email_to=job.email,
-            email_from="Internshipper.io <no-reply@internshipper.io>",
+            email_from="internshipper.io <no-reply@internshipper.io>",
             subject="New Internship Position",
             template_params=template_params
         )

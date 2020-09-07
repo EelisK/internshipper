@@ -3,16 +3,15 @@ import lib.setup
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from botocore.exceptions import ClientError
+from mongoengine.errors import DoesNotExist
 from typing import Iterable
 
 from lib.tasks import app as celery_app, POLLING_INTERVAL, perform_job_polling
-from app.exceptions import BadRequestException
+from app.exceptions import BadRequestException, NotFoundException
 from app.jobiili import Client as JobiiliClient
-from app.util import ses_client, \
-    create_html_email_from_template, \
-    create_plaintext_email_from_template
 from app.models import CreateJob
 from app.db import Job as JobDocument
+from mailers.sender import Sender as EmailSender
 
 import mongoengine
 import logging
@@ -27,13 +26,21 @@ INTERNSHIPPER_APP_URL = os.environ.get(
 
 @app.post("/jobs")
 def register(job: CreateJob):
+    """
+    Create a job and add it to a staging environment.
+    The job will need to be confirmed via email before it's added to the worker.
+    Performs platform credential validation.
+    """
     client = JobiiliClient(job.user, job.password)
     client.login()
     document = JobDocument(email=job.email, request=job.request,
                            password=job.password, user=job.user, options=job.options)
     try:
         document.save()
-        __try_send_confirmation_email(document)
+        email_sender = EmailSender(
+            "confirm.html", confirmation_link=__generate_confirmation_url(document))
+        email_sender.send_email(document.email, "Test Source <eelis.kostiainen@gmail.com>",
+                                "Confirm your subscription to internshipper.io")
         return {"success": True, "identity": client.identity}
     except Exception as e:
         logging.error("Exception in job creation")
@@ -41,15 +48,14 @@ def register(job: CreateJob):
         raise BadRequestException("Jobiili request was likely malformed")
 
 
-@app.get("/jobs/delete/{job_id}")
+@app.get("/jobs/delete/{job_id}", status_code=201)
 def delete_job(job_id: str):
     """
     Removes a job from the collection.
     No authentication with the assumption the user
-    has received this link from their email address
+    has received this link from their email address.
     """
-    # TODO add additional protection eg. Nonce and link validity period
-    document = JobDocument.objects.get(id=job_id)
+    document = __try_find_document(job_id)
     document.delete()
 
     return {"success": True}
@@ -57,8 +63,10 @@ def delete_job(job_id: str):
 
 @app.get("/jobs/confirm/{job_id}")
 def confirm_job(job_id: str):
-    # TODO add nonce and/or other forms of validation
-    document = JobDocument.objects.get(id=job_id)
+    """
+    Confirms the job and adds it to the worker as a periodic task.
+    """
+    document = __try_find_document(job_id)
     if not document.confirmed:
         document.update(confirmed=True)
         celery_app.add_periodic_task(
@@ -68,36 +76,11 @@ def confirm_job(job_id: str):
         raise BadRequestException("Subscription already confirmed")
 
 
-def __try_send_confirmation_email(job: JobDocument):
+def __try_find_document(id: str):
     try:
-        template = "confirm.html"
-        confirmation_link = __generate_confirmation_url(job)
-        response = ses_client.send_email(
-            Destination={
-                'ToAddresses': [job.email],
-            },
-            Message={
-                'Body': {
-                    'Html': {
-                        'Charset': 'UTF-8',
-                        'Data': create_html_email_from_template(template, confirmation_url=confirmation_link)
-                    },
-                    'Text': {
-                        'Charset': 'UTF-8',
-                        'Data': create_plaintext_email_from_template(template, confirmation_url=confirmation_link),
-                    },
-                },
-                'Subject': {
-                    'Charset': 'UTF-8',
-                    'Data': 'Confirm your subscription to internshipper.io',
-                },
-            },
-            Source="Test Source <eelis.kostiainen@gmail.com>",
-        )
-        logging.info("Email sent (id: {})".format(response['MessageId']))
-    except ClientError as e:
-        logging.error(e.response)
-        logging.error(e.response['Error']['Message'])
+        return JobDocument.objects.get(id=id)
+    except DoesNotExist:
+        raise NotFoundException("Job with id %s not found" % id)
 
 
 def __generate_confirmation_url(job: JobDocument):

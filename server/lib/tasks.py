@@ -45,8 +45,8 @@ def perform_job_polling(job_dict: dict):
         email_sender = EmailSender("new_jobs.html")
         template_params = {"jobs": jobs}
         email_sender.send_email(
-            email_to=job["email"],
-            email_from="Test Source <eelis.kostiainen@gmail.com>",
+            email_to=job.email,
+            email_from="Internshipper.io <no-reply@internshipper.io>",
             subject="New Internship Position",
             template_params=template_params
         )

@@ -42,7 +42,7 @@ def register(job: CreateJob):
             "confirmation_link": __generate_confirmation_url(document)}
         email_sender.send_email(
             email_to=document.email,
-            email_from="Test Source <eelis.kostiainen@gmail.com>",
+            email_from="Internshipper.io <no-reply@internshipper.io>",
             subject="Confirm your subscription to internshipper.io",
             template_params=template_params
         )

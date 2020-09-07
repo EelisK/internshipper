@@ -20,7 +20,7 @@ export const RedirectResponseDataProvider = ({
   children,
 }: RedirectResponseDataProviderProps) => {
   const data = getRedirectResponseData();
-  // clearRedirectResponseData();
+  clearRedirectResponseData();
 
   return (
     <RedirectResponseDataContext.Provider value={{ data }}>

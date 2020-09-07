@@ -7,11 +7,35 @@ on:
   pull_request:
 
 jobs:
+  test:
+    name: Test client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./client
+        run: yarn install --frozen-lockfile --link-duplicates --silent
+      - name: Run tests
+        working-directory: ./client
+        run: yarn run test
+
+  lint:
+    name: Run linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./client
+        run: yarn install --frozen-lockfile --link-duplicates --silent
+      - name: Run linter
+        working-directory: ./client
+        run: yarn run lint
+
   build_and_deploy:
     name: Build and deploy client to s3
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -21,12 +45,6 @@ jobs:
       - name: Install dependencies
         working-directory: ./client
         run: yarn install --frozen-lockfile --link-duplicates --silent
-      - name: Run tests
-        working-directory: ./client
-        run: yarn run test
-      - name: Run linter
-        working-directory: ./client
-        run: yarn run lint
       - name: Run build
         working-directory: ./client
         run: yarn run build

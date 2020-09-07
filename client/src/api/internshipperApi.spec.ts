@@ -1,6 +1,5 @@
 import * as internshipperApi from "./internshipperApi";
 import { HttpClient } from "./HttpClient";
-import { InternshipperClient } from "./InternshipperClient";
 import { InternshipSearch } from "./types";
 
 describe("internshipperApi", () => {

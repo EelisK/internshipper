@@ -1,5 +1,4 @@
 import * as React from "react";
-import { act } from "react-dom/test-utils";
 import { shallow } from "enzyme";
 import { MultiSelect, Props } from "./MultiSelect";
 import { Select } from "grommet";

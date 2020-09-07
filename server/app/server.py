@@ -7,6 +7,7 @@ from mongoengine.errors import DoesNotExist
 from typing import Iterable
 
 from lib.tasks import app as celery_app, POLLING_INTERVAL, perform_job_polling
+from lib.config import INTERNSHIPPER_APP_URL
 from app.exceptions import BadRequestException, NotFoundException
 from app.jobiili import Client as JobiiliClient
 from app.models import CreateJob
@@ -20,8 +21,6 @@ import os
 
 
 app = FastAPI()
-INTERNSHIPPER_APP_URL = os.environ.get(
-    "INTERNSHIPPER_APP_URL", "https://internshipper.io")
 
 
 @app.post("/jobs")
@@ -42,7 +41,7 @@ def register(job: CreateJob):
             "confirmation_link": __generate_confirmation_url(document)}
         email_sender.send_email(
             email_to=document.email,
-            email_from="Test Source <eelis.kostiainen@gmail.com>",
+            email_from="internshipper.io <no-reply@internshipper.io>",
             subject="Confirm your subscription to internshipper.io",
             template_params=template_params
         )
@@ -62,8 +61,7 @@ def delete_job(job_id: str):
     """
     document = __try_find_document(job_id)
     document.delete()
-
-    return {"success": True}
+    return RedirectResponse("/")
 
 
 @app.get("/jobs/confirm/{job_id}")

@@ -20,6 +20,7 @@ class SenderTest(unittest.TestCase):
             confirmation_url="http://foo.bar/confirm")
         self.assertIsNotNone(rendered_template)
         self.assertTrue(type(rendered_template) == str)
+        self.assertIn("http://foo.bar/confirm", rendered_template)
 
     def test_create_plaintext_email_from_template(self):
         sender = Sender("confirm.html")
@@ -28,6 +29,7 @@ class SenderTest(unittest.TestCase):
 
         self.assertIsNotNone(rendered_text)
         self.assertTrue(type(rendered_text) == str)
+        self.assertIn("http://foo.bar/confirm", rendered_text)
 
     @patch('boto3.client', create_mock_client)
     def test_send_email(self):

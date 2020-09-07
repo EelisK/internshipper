@@ -31,9 +31,22 @@ jobs:
         working-directory: ./client
         run: yarn run lint
 
-  build_and_deploy:
+  build:
+    name: Build client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./client
+        run: yarn install --frozen-lockfile --link-duplicates --silent
+      - name: Run build
+        working-directory: ./client
+        run: yarn run build
+
+  deploy:
     name: Build and deploy client to s3
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
       - name: Configure AWS Credentials
@@ -50,5 +63,4 @@ jobs:
         run: yarn run build
       - name: Deploy to s3
         working-directory: ./client
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: aws s3 sync ./dist/ s3://internshipper-static --delete

@@ -3,9 +3,13 @@ import { formatDistance } from "date-fns";
 import { Text } from "grommet";
 import { DeleteRedirectResponseData } from "../../../api/types";
 
-export const DeleteRedirectResponseDataDetailsDescription: React.FC<{
+export interface Props {
   data: DeleteRedirectResponseData;
-}> = ({ data }) => (
+}
+
+export const DeleteRedirectResponseDataDetailsDescription: React.FC<Props> = ({
+  data,
+}) => (
   <>
     <Text>
       Job search stopped. Found overall {data.payload.found_jobs.length} jobs

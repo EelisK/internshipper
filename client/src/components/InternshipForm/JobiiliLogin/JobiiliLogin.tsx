@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UserCredentials } from "../../../api/types";
-import { TextInput, FormField, Grid, Box } from "grommet";
+import { TextInput, FormField, Grid, Box, ResponsiveContext } from "grommet";
 import { User, Lock } from "grommet-icons";
 
 export interface Props extends UserCredentials {
@@ -15,13 +15,20 @@ export const JobiiliLogin: React.FC<Props> = (props) => {
     const value = event.target.value;
     setCredentials({ ...credentials, [property]: value });
   };
+  const size = React.useContext(ResponsiveContext);
+  const isMobileView = size === "small";
+  const Container = isMobileView ? Box : Grid;
+  const containerProps = isMobileView
+    ? {}
+    : {
+        areas: [{ name: "center", start: [1, 0], end: [1, 0] }],
+        columns: ["xsmall", "flex", "xsmall"],
+        rows: ["small"],
+        gap: "small",
+      };
+
   return (
-    <Grid
-      areas={[{ name: "center", start: [1, 0], end: [1, 0] }]}
-      columns={["xsmall", "flex", "xsmall"]}
-      rows={["small"]}
-      gap="small"
-    >
+    <Container {...containerProps}>
       <Box gridArea="center">
         <FormField label="Metropolia username">
           <TextInput
@@ -41,6 +48,6 @@ export const JobiiliLogin: React.FC<Props> = (props) => {
           />
         </FormField>
       </Box>
-    </Grid>
+    </Container>
   );
 };

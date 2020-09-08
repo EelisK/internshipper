@@ -79,7 +79,7 @@ def confirm_job(job_id: str):
     if not document.confirmed:
         document.update(confirmed=True)
         celery_app.add_periodic_task(
-            POLLING_INTERVAL, perform_job_polling.s(document), name='fetch_job')
+            POLLING_INTERVAL, perform_job_polling.s(document.to_dict()), name='fetch_job')
 
         return RedirectResponse("/#%s" % __compose_redirect_data({
             "action": "CONFIRM_JOB",

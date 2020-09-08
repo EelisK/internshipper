@@ -7,7 +7,7 @@ import { JobiiliRequest } from "./JobiiliRequest";
 import { AdditionalFilters } from "./AdditionalFilters";
 import { JobiiliLogin } from "./JobiiliLogin";
 import { Notification } from "./Notification";
-import { StyledForm } from "./styled";
+import { StyledForm } from "./styles";
 
 export interface Props {
   onSubmit: () => Promise<any>;

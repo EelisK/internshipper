@@ -15,7 +15,7 @@ export const ConfirmRedirectResponseDataDetailsDescription: React.FC<Props> = ({
     <Text color="brand">
       <Anchor href={`/jobs/delete/${data.payload.id}`} label="this link" />
     </Text>
-    . This link will be included in the subsequent emails, so you don't need
+    . This link will be included in the subsequent emails, so you don&#39;t need
     worry about saving it for now.
   </Text>
 );

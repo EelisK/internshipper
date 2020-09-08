@@ -94,7 +94,8 @@ class ServerTest(unittest.TestCase):
         response = self.client.get("/jobs/delete/%s" %
                                    mock_job.id, allow_redirects=False)
         self.assertEqual(response.status_code, 307)
-        self.assertEqual(response.headers, {"location": "/"})
+        self.assertIn("location", response.headers)
+        self.assertRegex(response.headers["location"], "^/#data=")
 
     def test_delete_jobs_not_found(self):
         non_existant_id = "555555555555555555555555"
@@ -109,7 +110,8 @@ class ServerTest(unittest.TestCase):
         response = self.client.get("/jobs/confirm/%s" %
                                    mock_job.id, allow_redirects=False)
         self.assertEqual(response.status_code, 307)
-        self.assertEqual(response.headers, {"location": "/"})
+        self.assertIn("location", response.headers)
+        self.assertRegex(response.headers["location"], "^/#data=")
 
     @patch.object(Celery, 'add_periodic_task', mock_add_periodic_task)
     def test_confirm_jobs_already_confirmed(self):

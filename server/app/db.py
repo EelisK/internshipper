@@ -39,10 +39,14 @@ class Job(mongoengine.Document):
         self.password = encrypt(self.password)
         return super().save(*args, **kwargs)
 
-    def to_dict(self):
+    def to_dict(self, remove_sensitive_data=False):
         dict_value = json.loads(self.to_json())
         dict_value['id'] = dict_value['_id']['$oid']
+        dict_value['created_at'] = dict_value['created_at']['$date']
         del dict_value['_id']
+        if remove_sensitive_data:
+            del dict_value['user']
+            del dict_value['password']
         return dict_value
 
     def __format_request(self):

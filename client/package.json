@@ -12,6 +12,7 @@
     "lint": "eslint -c .eslintrc \"src/**/*.+(js|ts)?(x)\""
   },
   "dependencies": {
+    "date-fns": "^2.16.1",
     "grommet": "^2.15.0",
     "grommet-icons": "^4.4.0",
     "lodash": "^4.17.20",

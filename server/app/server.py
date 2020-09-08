@@ -16,6 +16,7 @@ from mailers.sender import Sender as EmailSender
 
 import mongoengine
 import logging
+import base64
 import json
 import os
 
@@ -60,8 +61,13 @@ def delete_job(job_id: str):
     has received this link from their email address.
     """
     document = __try_find_document(job_id)
+    document_dict = document.to_dict(remove_sensitive_data=True)
     document.delete()
-    return RedirectResponse("/")
+
+    return RedirectResponse("/#%s" % __compose_redirect_data({
+        "action": "DELETE_JOB",
+        "payload": document_dict
+    }))
 
 
 @app.get("/jobs/confirm/{job_id}")
@@ -74,7 +80,11 @@ def confirm_job(job_id: str):
         document.update(confirmed=True)
         celery_app.add_periodic_task(
             POLLING_INTERVAL, perform_job_polling.s(document), name='fetch_job')
-        return RedirectResponse("/")
+
+        return RedirectResponse("/#%s" % __compose_redirect_data({
+            "action": "CONFIRM_JOB",
+            "payload": document.to_dict(remove_sensitive_data=True)
+        }))
     else:
         raise BadRequestException("Subscription already confirmed")
 
@@ -88,3 +98,9 @@ def __try_find_document(id: str):
 
 def __generate_confirmation_url(job: JobDocument):
     return "%s/jobs/confirm/%s" % (INTERNSHIPPER_APP_URL, job.id)
+
+
+def __compose_redirect_data(data: dict):
+    json_string = json.dumps(data).encode("ascii")
+    base64_string = base64.b64encode(json_string).decode("ascii")
+    return "data=%s" % base64_string

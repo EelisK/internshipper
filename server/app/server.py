@@ -39,7 +39,7 @@ def register(job: CreateJob):
         document.save()
         email_sender = EmailSender("confirm.html")
         template_params = {
-            "confirmation_link": __generate_confirmation_url(document)}
+            "confirmation_url": __generate_confirmation_url(document)}
         email_sender.send_email(
             email_to=document.email,
             email_from="internshipper.io <no-reply@internshipper.io>",

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UserContactInfo } from "../../../api/types";
-import { TextInput, FormField, Box, Grid } from "grommet";
+import { TextInput, FormField, Box, Grid, ResponsiveContext } from "grommet";
 import { Mail } from "grommet-icons";
 
 export interface Props extends UserContactInfo {
@@ -18,14 +18,20 @@ export const Notification: React.FC<Props> = (props) => {
     const value = event.target.value;
     onUserContactInfoChange({ ...contactInfo, [property]: value });
   };
+  const size = React.useContext(ResponsiveContext);
+  const isMobileView = size === "small";
+  const Container = isMobileView ? Box : Grid;
+  const containerProps = isMobileView
+    ? {}
+    : {
+        areas: [{ name: "center", start: [1, 0], end: [1, 0] }],
+        columns: ["xsmall", "flex", "xsmall"],
+        rows: ["xsmall"],
+        gap: "small",
+      };
 
   return (
-    <Grid
-      areas={[{ name: "center", start: [1, 0], end: [1, 0] }]}
-      columns={["xsmall", "flex", "xsmall"]}
-      rows={["xsmall"]}
-      gap="small"
-    >
+    <Container {...containerProps}>
       <Box gridArea="center">
         <FormField label="Email address">
           <TextInput
@@ -37,6 +43,6 @@ export const Notification: React.FC<Props> = (props) => {
           />
         </FormField>
       </Box>
-    </Grid>
+    </Container>
   );
 };

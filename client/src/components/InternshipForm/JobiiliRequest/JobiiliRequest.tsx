@@ -108,7 +108,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
               values
                 .filter((klass) => !isMetaClassification(klass))
                 .map((klass) => klass.name)
-                .join(" ,")
+                .join(", ")
             }
           />
         </FormField>

@@ -6,15 +6,11 @@ import mongoengine
 from jsonschema import Draft4Validator, validators
 from app.crypto import encrypt
 
-__DATABASE_NAME = os.environ.get('DATABASE_NAME')
 __DATABASE_URL = os.environ.get('MONGODB_URL')
-
-if not __DATABASE_NAME:
-    raise Exception('DATABASE_NAME environment variable not provided')
 if not __DATABASE_URL:
-    raise Exception('DATABASE_NAME environment variable not provided')
+    raise Exception('MONGODB_URL environment variable not provided')
 
-mongoengine.connect(__DATABASE_NAME, host=__DATABASE_URL)
+mongoengine.connect(host=__DATABASE_URL)
 
 
 class Job(mongoengine.Document):

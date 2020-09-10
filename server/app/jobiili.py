@@ -5,6 +5,7 @@ import bs4
 import json
 
 from app.exceptions import UnauthorizedException, ForbiddenException
+from app.adapters import TLSAdapter
 
 
 BASE_URL = "https://www.jobiili.fi"
@@ -15,6 +16,7 @@ METROPOLIA_IDP_URL = "https://idp.metropolia.fi/idp/profile/SAML2/Redirect/SSO"
 class Client:
     def __init__(self, username, password):
         self.session = requests.Session()
+        self.session.mount('https://', TLSAdapter())
         self.username = username
         self.password = password
         self.identity = None

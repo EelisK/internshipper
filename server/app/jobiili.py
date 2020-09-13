@@ -16,7 +16,8 @@ METROPOLIA_IDP_URL = "https://idp.metropolia.fi/idp/profile/SAML2/Redirect/SSO"
 class Client:
     def __init__(self, username, password):
         self.session = requests.Session()
-        self.session.mount('https://', TLSAdapter())
+        if os.environ.get('ENV') == 'development':
+            self.session.mount('https://', TLSAdapter())
         self.username = username
         self.password = password
         self.identity = None

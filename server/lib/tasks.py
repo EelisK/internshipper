@@ -2,6 +2,7 @@ import lib.setup
 import os
 import logging
 import datetime
+import itertools
 
 from botocore.exceptions import ClientError
 from celery import Celery
@@ -44,7 +45,7 @@ def perform_job_polling(job_dict: dict):
         job.update(found_jobs=[*job.found_jobs, *jobs])
         email_sender = EmailSender("new_jobs.html")
         template_params = {
-            "jobs": jobs,
+            "jobs": __add_custom_template_fields(new_jobs),
             "delete_link": __generate_delete_url(job)
         }
         email_sender.send_email(
@@ -73,6 +74,22 @@ def __extract_new_jobs(prev_list, curr_list):
 
 def __generate_delete_url(job: JobDocument):
     return "%s/jobs/delete/%s" % (INTERNSHIPPER_APP_URL, job.id)
+
+
+def __add_custom_template_fields(jobs: list):
+    return list(map(lambda job: {**job, "jobWeeksContinuous": __get_max_continuous_availability(job)}, jobs))
+
+
+def __get_max_continuous_availability(job: dict):
+    availability = job["availability"]
+    normalized_availability = map(
+        lambda spots: 0 if spots == 0 else 1, availability)
+
+    grouped_sequences = itertools.groupby(normalized_availability)
+    sequence_lengths = [sum(value for _ in group)
+                        for value, group in grouped_sequences]
+
+    return max(sequence_lengths)
 
 
 if __name__ == '__main__':

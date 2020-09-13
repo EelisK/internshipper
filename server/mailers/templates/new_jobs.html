@@ -25,11 +25,11 @@
         >https://jobiili.fi/#/job/{{ job["id"] }}</a>
     </p>
     <ul>
-      <li>Name of job: {{ job["jobName"] }}</li>
       <li>Organization: {{ job["orgName"] }}</li>
-      <li>Maximum students allowed: {{ job["maxTotalPersons"] }}</li>
       <li>Start date: {{ job["startDate"] }}</li>
       <li>End data: {{ job["endDate"] }}</li>
+      <li>Longest available period: {{ job["jobWeeks"] }} weeks ({{ job["jobWeeksContinuous"] }} continuous weeks)</li>
+      <li>Maximum students allowed: {{ job["maxTotalPersons"] }}</li>
     </ul>
     {% endfor %}
   </body>

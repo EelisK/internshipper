@@ -1,4 +1,4 @@
-import lib.setup
+import lib.environment
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse

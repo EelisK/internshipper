@@ -6,7 +6,7 @@ services:
     environment: &server_env
       ENV: development
       MONGODB_URL: mongodb://root:root@mongodb-dev:27017/?authSource=admin
-      INTERNSHIPPER_APP_URL: http://localhost:8000
+      INTERNSHIPPER_APP_URL: https://localhost:4433
       ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
       RABBITMQ_URI: amqp://guest:guest@rabbitmq-dev:5672/?heartbeat=2
 

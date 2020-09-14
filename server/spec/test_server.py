@@ -8,24 +8,7 @@ from app.exceptions import UnauthorizedException
 from app.jobiili import Client as JobiiliClient
 from app.db import Job as JobDocument
 from mailers.sender import Sender as EmailSender
-
-JOBIILI_REQUEST = {
-    "jobClasses": [375],
-    "jobTargetDegrees": [402],
-    "languages": [],
-    "regions": ["Pääkaupunkiseutu"],
-    "municipalities": [],
-    "organization": None,
-    "page": 1,
-    "startDate": "2020-08-03T00:00:00-12:00",
-    "endDate": "2020-12-20T00:00:00-12:00",
-    "types": [],
-    "tags": [],
-    "minLength": 5,
-    "continous": True,
-    "orderBy": "publicationDate",
-    "reverse": True
-}
+from mocks import JOBIILI_REQUEST
 
 
 def mock_login(self, *args, **kwargs):

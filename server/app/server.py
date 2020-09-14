@@ -6,7 +6,6 @@ from botocore.exceptions import ClientError
 from mongoengine.errors import DoesNotExist
 from typing import Iterable
 
-from lib.tasks import app as celery_app, POLLING_INTERVAL, perform_job_polling
 from lib.config import INTERNSHIPPER_APP_URL
 from app.exceptions import BadRequestException, NotFoundException
 from app.jobiili import Client as JobiiliClient
@@ -78,8 +77,6 @@ def confirm_job(job_id: str):
     document = __try_find_document(job_id)
     if not document.confirmed:
         document.update(confirmed=True)
-        celery_app.add_periodic_task(
-            POLLING_INTERVAL, perform_job_polling.s(document.to_dict()), name='fetch_job')
 
         return RedirectResponse("/#%s" % __compose_redirect_data({
             "action": "CONFIRM_JOB",

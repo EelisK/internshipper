@@ -41,10 +41,6 @@ def raise_exception(*args, **kwargs):
     raise UnauthorizedException("")
 
 
-def mock_add_periodic_task(*args, **kwargs):
-    return True
-
-
 class ServerTest(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
@@ -104,7 +100,6 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(
             {"detail": "Job with id 555555555555555555555555 not found"}, response.json())
 
-    @patch.object(Celery, 'add_periodic_task', mock_add_periodic_task)
     def test_confirm_jobs(self):
         mock_job = self.create_mock_job()
         response = self.client.get("/jobs/confirm/%s" %
@@ -113,7 +108,6 @@ class ServerTest(unittest.TestCase):
         self.assertIn("location", response.headers)
         self.assertRegex(response.headers["location"], "^/#data=")
 
-    @patch.object(Celery, 'add_periodic_task', mock_add_periodic_task)
     def test_confirm_jobs_already_confirmed(self):
         mock_job = self.create_mock_job()
         mock_job.update(confirmed=True)
@@ -122,7 +116,6 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(
             {"detail": "Subscription already confirmed"}, response.json())
 
-    @patch.object(Celery, 'add_periodic_task', mock_add_periodic_task)
     def test_confirm_jobs_not_found(self):
         non_existant_id = "555555555555555555555555"
         response = self.client.get("/jobs/confirm/%s" %

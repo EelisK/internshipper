@@ -6,10 +6,11 @@ import itertools
 
 from botocore.exceptions import ClientError
 from celery import Celery
+from celery.schedules import crontab
+from app.db import Job as JobDocument
 
 from app import crypto
 from app.jobiili import Client as JobiiliClient
-from app.db import Job as JobDocument
 from lib.config import INTERNSHIPPER_APP_URL, POLLING_INTERVAL
 from mailers.sender import Sender as EmailSender
 
@@ -27,9 +28,23 @@ app.conf.update(
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    for job in JobDocument.objects(confirmed=True):
-        sender.add_periodic_task(
-            POLLING_INTERVAL, perform_job_polling.s(job.to_dict()), name='fetch_job')
+    # TODO: create a more clever solution for polling that fills the following criteria:
+    # * Requires minimal communication with db
+    # * Leaves no unneeded tasks running
+    sender.add_periodic_task(
+        POLLING_INTERVAL, perform_bulk_job_polling.s())
+
+
+@app.task
+def perform_bulk_job_polling():
+    def perform_polling_task(job: JobDocument):
+        if job.confirmed:
+            perform_job_polling.s(job.to_dict()).apply_async()
+        else:
+            raise Exception(
+                'Polling should only be initialized for confirmed jobs')
+    [perform_polling_task(job)
+        for job in JobDocument.objects(confirmed=True)]
 
 
 @app.task

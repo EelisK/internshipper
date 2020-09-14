@@ -29,7 +29,17 @@ services:
     depends_on:
       - mongodb-dev
       - rabbitmq-dev
-    command: ["celery", "-A", "lib.tasks", "worker", "-B", "-l", "info"]
+    command:
+      [
+        "celery",
+        "-A",
+        "lib.tasks",
+        "worker",
+        "-B",
+        "-l",
+        "info",
+        "--without-mingle",
+      ]
 
   mongodb-dev:
     image: mongo:4.2
@@ -49,6 +59,7 @@ services:
       - 4433:443
     depends_on:
       - web
+      - worker
     volumes:
       - ./docker/nginx/dev.key:/etc/nginx/internshipper.io.key
       - ./docker/nginx/dev.crt:/etc/nginx/internshipper.io.crt

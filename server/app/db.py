@@ -30,10 +30,9 @@ class Job(mongoengine.Document):
 
     def save(self, *args, **kwargs):
         self.__format_request()
-        if kwargs.get('initial'):
-            self.created_at = datetime.datetime.now()
-            self.user = encrypt(self.user)
-            self.password = encrypt(self.password)
+        self.created_at = datetime.datetime.now()
+        self.user = encrypt(self.user)
+        self.password = encrypt(self.password)
         return super().save(*args, **kwargs)
 
     def to_dict(self, remove_sensitive_data=False):

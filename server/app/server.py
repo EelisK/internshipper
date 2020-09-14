@@ -35,7 +35,7 @@ def register(job: CreateJob):
     document = JobDocument(email=job.email, request=job.request,
                            password=job.password, user=job.user, options=job.options)
     try:
-        document.save(initial=True)
+        document.save()
         email_sender = EmailSender("confirm.html")
         template_params = {
             "confirmation_url": __generate_confirmation_url(document)}

@@ -1,4 +1,4 @@
-import { JobiiliRequest, JobiiliResponse } from "./Jobiili";
+import { JobiiliRequest } from "./Jobiili";
 import { AdditionalFilters } from "../../components/InternshipForm/AdditionalFilters";
 
 export interface AdditionalRequestOptions {

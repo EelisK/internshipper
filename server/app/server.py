@@ -88,7 +88,7 @@ def confirm_job(job_id: str):
 
 def __try_find_document(id: str):
     try:
-        return JobDocument.objects.get(id=id)
+        return JobDocument.get_by_id(id)
     except DoesNotExist:
         raise NotFoundException("Job with id %s not found" % id)
 

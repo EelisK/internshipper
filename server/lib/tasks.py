@@ -49,19 +49,19 @@ def perform_bulk_job_polling():
 
 @app.task
 def perform_job_polling(job_dict: dict):
-    job = JobDocument.objects.get(id=job_dict['id'])
     client = JobiiliClient(crypto.decrypt(
-        job.user), crypto.decrypt(job.password))
+        job_dict["user"]), crypto.decrypt(job_dict["password"]))
     client.login()
-    jobs = client.get_jobs(job.request)
-    curr_jobs = __apply_custom_options(jobs, job.options)
-    new_jobs = __extract_new_jobs(job.found_jobs, curr_jobs)
+    jobs = client.get_jobs(job_dict["request"])
+    curr_jobs = __apply_custom_options(jobs, job_dict["options"])
+    new_jobs = __extract_new_jobs(job_dict["found_jobs"], curr_jobs)
     if len(new_jobs) != 0:
-        job.update(found_jobs=[*job.found_jobs, *jobs])
+        document = JobDocument.get_by_id(job_dict["id"])
+        document.update(found_jobs=[*job_dict["found_jobs"], *jobs])
         email_sender = EmailSender("new_jobs.html")
         template_params = {
             "jobs": __add_custom_template_fields(new_jobs),
-            "delete_link": __generate_delete_url(job)
+            "delete_link": __generate_delete_url(document)
         }
         email_sender.send_email(
             email_to=job.email,

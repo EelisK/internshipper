@@ -45,6 +45,10 @@ class Job(mongoengine.Document):
             del dict_value['password']
         return dict_value
 
+    @staticmethod
+    def get_by_id(id: str):
+        return Job.objects.get(id=id)
+
     def __format_request(self):
         with open('./app/request_schema.json', 'r') as schema:
             schema = json.loads(''.join(schema.readlines()))

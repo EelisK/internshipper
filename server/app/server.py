@@ -60,7 +60,7 @@ def delete_job(job_id: str):
     has received this link from their email address.
     """
     document = __try_find_document(job_id)
-    document_dict = document.to_dict(remove_sensitive_data=True)
+    document_dict = document.to_dict(remove_sensitive_data=True, minimize=True)
     document.delete()
 
     return RedirectResponse("/#%s" % __compose_redirect_data({
@@ -80,7 +80,7 @@ def confirm_job(job_id: str):
 
         return RedirectResponse("/#%s" % __compose_redirect_data({
             "action": "CONFIRM_JOB",
-            "payload": document.to_dict(remove_sensitive_data=True)
+            "payload": document.to_dict(remove_sensitive_data=True, minimize=True)
         }))
     else:
         raise BadRequestException("Subscription already confirmed")

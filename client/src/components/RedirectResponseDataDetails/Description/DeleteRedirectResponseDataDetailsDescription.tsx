@@ -12,12 +12,12 @@ export const DeleteRedirectResponseDataDetailsDescription: React.FC<Props> = ({
 }) => (
   <>
     <Text>
-      Job search stopped. Found overall {data.payload.found_jobs.length} jobs
+      Job search stopped. Found overall {data.payload.found_jobs_count} jobs
       matching the provided criteria. This search lasted{" "}
       <Text weight="bold">
         {formatDistance(new Date(), new Date(data.payload.created_at))}.
       </Text>{" "}
-      {data.payload.found_jobs.length !== 0 &&
+      {data.payload.found_jobs_count !== 0 &&
         "Hopefully at least one of them was suitable for you."}{" "}
     </Text>
     <Text>

@@ -73,7 +73,7 @@ services:
       <<: *server_env
       ENV: test
       MONGODB_URL: mongodb://root:root@mongodb-test:27017/?authSource=admin
-      INTERNSHIPPER_APP_URL: http://localhost:8000
+      INTERNSHIPPER_APP_URL: https://test.internshipper.io
       ENCRYPTION_KEY: yA-XozFoGJnjSVhfu-qRAuw-ZJw3igLjltLL5goCQVE=
       RABBITMQ_URI: amqp://guest:guest@rabbitmq-test:5672/?heartbeat=2
     depends_on:

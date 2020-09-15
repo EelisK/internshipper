@@ -57,20 +57,21 @@ def perform_job_polling(job_dict: dict):
     new_jobs = __extract_new_jobs(job_dict["found_jobs"], curr_jobs)
     if len(new_jobs) != 0:
         document = JobDocument.get_by_id(job_dict["id"])
-        document.update(found_jobs=[*job_dict["found_jobs"], *jobs])
+        document.update(found_jobs=[*job_dict["found_jobs"], *new_jobs])
         email_sender = EmailSender("new_jobs.html")
         template_params = {
             "jobs": __add_custom_template_fields(new_jobs),
             "delete_link": __generate_delete_url(document)
         }
         email_sender.send_email(
-            email_to=job.email,
+            email_to=document.email,
             email_from="internshipper.io <no-reply@internshipper.io>",
-            subject="New Internship Position",
+            subject="New Internship Position%s" % (
+                "s" if len(new_jobs) > 1 else ""),
             template_params=template_params
         )
     logging.info("{} Poll complete for job {}".format(
-        datetime.datetime.utcnow(), job["id"]))
+        datetime.datetime.utcnow(), job_dict["id"]))
 
 
 def __apply_custom_options(jobs, options):

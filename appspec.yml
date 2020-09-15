@@ -20,6 +20,6 @@ hooks:
       runas: root
   ApplicationStop:
     - location: server/scripts/stop_server.sh
-    - location: server/scripts/stop_celery.sh
+    - location: server/scripts/stop_worker_processes.sh
       timeout: 300
       runas: root

@@ -28,7 +28,7 @@ export class InternshipperClient implements HttpClient {
     });
     const response = await req.json();
     if (!req.ok) {
-      throw new Error(JSON.stringify(response));
+      throw new Error(response.detail);
     }
     return response;
   }

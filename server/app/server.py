@@ -82,12 +82,12 @@ def confirm_job(job_id: str):
     raise BadRequestException("Subscription already confirmed")
 
 
-def __try_find_document(document_id: str):
+def __try_find_document(job_id: str):
     try:
-        return JobDocument.get_by_id(document_id)
+        return JobDocument.get_by_id(job_id)
     except DoesNotExist as mongo_exception:
         raise NotFoundException("Job with id %s not found" %
-                                id) from mongo_exception
+                                job_id) from mongo_exception
 
 
 def __generate_confirmation_url(job: JobDocument):

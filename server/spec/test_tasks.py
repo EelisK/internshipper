@@ -84,7 +84,7 @@ class TasksTest(unittest.TestCase):
         self.assertEqual(mock_perform_job_polling.call_count, 2)
 
     @staticmethod
-    def create_mock_job(self, **options):
+    def create_mock_job(**options):
         mock_job = JobDocument(
             email=options.get("email", "email@domain.tld"),
             request=options.get("request", JOBIILI_REQUEST),

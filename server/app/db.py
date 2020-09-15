@@ -35,7 +35,7 @@ class Job(mongoengine.Document):
         self.password = encrypt(self.password)
         return super().save(*args, **kwargs)
 
-    def to_dict(self, remove_sensitive_data=False):
+    def to_dict(self, remove_sensitive_data=False, minimize=False):
         dict_value = json.loads(self.to_json())
         dict_value['id'] = dict_value['_id']['$oid']
         dict_value['created_at'] = dict_value['created_at']['$date']
@@ -43,6 +43,9 @@ class Job(mongoengine.Document):
         if remove_sensitive_data:
             del dict_value['user']
             del dict_value['password']
+        if minimize:
+            dict_value['found_jobs_count'] = len(dict_value['found_jobs'])
+            del dict_value['found_jobs']
         return dict_value
 
     @staticmethod

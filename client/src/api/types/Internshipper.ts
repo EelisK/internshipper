@@ -1,4 +1,4 @@
-import { JobiiliRequest, JobiiliResponse } from "./Jobiili";
+import { JobiiliRequest } from "./Jobiili";
 import { AdditionalFilters } from "../../components/InternshipForm/AdditionalFilters";
 
 export interface AdditionalRequestOptions {
@@ -42,7 +42,7 @@ export interface ConfirmRedirectResponseData extends BaseRedirectResponseData {
 export interface InternshipSearchResult {
   id: string;
   created_at: number;
-  found_jobs: JobiiliResponse[];
+  found_jobs_count: number;
   options?: AdditionalFilters;
   request: JobiiliRequest;
 }

@@ -16,7 +16,7 @@ describe("<RedirectResponseDataDetails />", () => {
       action: "DELETE_JOB",
       payload: {
         created_at: 0,
-        found_jobs: [],
+        found_jobs_count: 0,
         id: "id",
         request: {} as any,
         options: undefined,

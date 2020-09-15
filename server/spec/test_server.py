@@ -8,7 +8,7 @@ from app.exceptions import UnauthorizedException
 from app.jobiili import Client as JobiiliClient
 from app.db import Job as JobDocument
 from mailers.sender import Sender as EmailSender
-from mocks import JOBIILI_REQUEST
+from mocks import JOBIILI_REQUEST, JOBIILI_RESPONSE
 
 
 def mock_login(self, *args, **kwargs):
@@ -74,6 +74,17 @@ class ServerTest(unittest.TestCase):
                                    mock_job.id, allow_redirects=False)
         self.assertEqual(response.status_code, 307)
         self.assertIn("location", response.headers)
+        self.assertRegex(response.headers["location"], "^/#data=")
+
+    def test_delete_jobs_large_payload(self):
+        mock_job = self.create_mock_job()
+        mock_job.update(found_jobs=JOBIILI_RESPONSE * 100)
+
+        response = self.client.get("/jobs/delete/%s" %
+                                   mock_job.id, allow_redirects=False)
+        self.assertEqual(response.status_code, 307)
+        self.assertIn("location", response.headers)
+        self.assertLess(len(response.headers["location"]), 32*1000)
         self.assertRegex(response.headers["location"], "^/#data=")
 
     def test_delete_jobs_not_found(self):

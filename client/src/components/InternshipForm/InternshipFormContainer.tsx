@@ -1,6 +1,10 @@
 import * as React from "react";
 import { createInternshipSearch } from "../../api/internshipperApi";
-import { useInternshipperClient } from "../../providers";
+import {
+  useInternshipperClient,
+  RequestState,
+  useRequestState,
+} from "../../providers";
 import { InternshipForm } from "./InternshipForm";
 import {
   AdditionalRequestOptions,
@@ -12,6 +16,7 @@ import { ReadableJobiiliRequest } from "./types";
 
 export interface Props {
   createInternshipSearch: ReturnType<typeof createInternshipSearch>;
+  setRequestState: (state: RequestState) => any;
 }
 
 export interface State {
@@ -62,7 +67,7 @@ export class InternshipFormContainer extends React.PureComponent<Props, State> {
   render() {
     return (
       <InternshipForm
-        onSubmit={this.onSubmit}
+        onSubmit={this.tryCreateInternshipSearch}
         updateInternshipQuery={this.updateInternshipQuery}
         updateJobiiliRequest={this.updateJobiiliRequest}
         updateOptions={this.updateOptions}
@@ -71,14 +76,24 @@ export class InternshipFormContainer extends React.PureComponent<Props, State> {
     );
   }
 
-  private onSubmit = async () => {
+  private tryCreateInternshipSearch = async () => {
+    try {
+      this.props.setRequestState({ status: "loading" });
+      await this.createInternshipSearch();
+      this.props.setRequestState({ status: "idle" });
+      this.setState(getInitialState());
+    } catch (error) {
+      this.props.setRequestState({ status: "error", error });
+    }
+  };
+
+  private createInternshipSearch = async () => {
     const internshipSearch: InternshipSearch = {
       ...this.state.internshipSearchQuery,
       options: this.state.options,
       request: transformReadableJobiiliRequest(this.state.request),
     };
     await this.props.createInternshipSearch(internshipSearch);
-    this.setState(getInitialState());
   };
 
   private updateInternshipQuery = (
@@ -114,15 +129,20 @@ export class InternshipFormContainer extends React.PureComponent<Props, State> {
     });
 }
 
-export type WrapperProps = Omit<Props, "createInternshipSearch">;
+export type WrapperProps = Omit<
+  Props,
+  "createInternshipSearch" | "setRequestState"
+>;
 
 export const InternshipFormContainerWrapper: React.FC<WrapperProps> = (
   props
 ) => {
   const client = useInternshipperClient();
+  const [, setRequestState] = useRequestState();
   return (
     <InternshipFormContainer
       createInternshipSearch={createInternshipSearch(client)}
+      setRequestState={setRequestState}
       {...props}
     />
   );

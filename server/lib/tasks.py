@@ -1,14 +1,14 @@
+# pylint: disable=wrong-import-order,unused-import
 import lib.environment
+
 import os
 import logging
 import datetime
 import itertools
 
-from botocore.exceptions import ClientError
 from celery import Celery
-from celery.schedules import crontab
-from app.db import Job as JobDocument
 
+from app.db import Job as JobDocument
 from app import crypto
 from app.jobiili import Client as JobiiliClient
 from lib.config import INTERNSHIPPER_APP_URL, POLLING_INTERVAL
@@ -26,6 +26,7 @@ app.conf.update(
 )
 
 
+# pylint: disable=unused-argument
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
     # TODO: create a more clever solution for polling that fills the following criteria:
@@ -43,8 +44,8 @@ def perform_bulk_job_polling():
         else:
             raise Exception(
                 'Polling should only be initialized for confirmed jobs')
-    [perform_polling_task(job)
-        for job in JobDocument.objects(confirmed=True)]
+    for job in JobDocument.objects(confirmed=True):
+        perform_polling_task(job)
 
 
 @app.task
@@ -70,8 +71,8 @@ def perform_job_polling(job_dict: dict):
                 "s" if len(new_jobs) > 1 else ""),
             template_params=template_params
         )
-    logging.info("{} Poll complete for job {}".format(
-        datetime.datetime.utcnow(), job_dict["id"]))
+    logging.info("%s Poll complete for job %s",
+                 datetime.datetime.utcnow(), job_dict["id"])
 
 
 def __apply_custom_options(jobs, options):
@@ -93,7 +94,10 @@ def __generate_delete_url(job: JobDocument):
 
 
 def __add_custom_template_fields(jobs: list):
-    return list(map(lambda job: {**job, "jobWeeksContinuous": __get_max_continuous_availability(job)}, jobs))
+    return list(map(lambda job: {
+        **job,
+        "jobWeeksContinuous": __get_max_continuous_availability(job)
+    }, jobs))
 
 
 def __get_max_continuous_availability(job: dict):

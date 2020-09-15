@@ -1,6 +1,4 @@
-import os
 import unittest
-from cryptography.fernet import Fernet
 from app import crypto
 
 

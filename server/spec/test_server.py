@@ -1,25 +1,27 @@
 import unittest
 from unittest.mock import patch
 from fastapi.testclient import TestClient
-from celery import Celery
+from mocks import JOBIILI_REQUEST, JOBIILI_RESPONSE
 
 from app.server import app
 from app.exceptions import UnauthorizedException
 from app.jobiili import Client as JobiiliClient
 from app.db import Job as JobDocument
 from mailers.sender import Sender as EmailSender
-from mocks import JOBIILI_REQUEST, JOBIILI_RESPONSE
 
 
+# pylint: disable=unused-argument
 def mock_login(self, *args, **kwargs):
     self.identity = "mock-identity"
     return True
 
 
+# pylint: disable=unused-argument
 def mock_send(self, *args, **kwargs):
     return True
 
 
+# pylint: disable=unused-argument
 def raise_exception(*args, **kwargs):
     raise UnauthorizedException("")
 
@@ -69,7 +71,7 @@ class ServerTest(unittest.TestCase):
         self.assertEqual({"detail": ""}, response.json())
 
     def test_delete_jobs(self):
-        mock_job = self.create_mock_job()
+        mock_job = ServerTest.create_mock_job()
         response = self.client.get("/jobs/delete/%s" %
                                    mock_job.id, allow_redirects=False)
         self.assertEqual(response.status_code, 307)
@@ -77,7 +79,7 @@ class ServerTest(unittest.TestCase):
         self.assertRegex(response.headers["location"], "^/#data=")
 
     def test_delete_jobs_large_payload(self):
-        mock_job = self.create_mock_job()
+        mock_job = ServerTest.create_mock_job()
         mock_job.update(found_jobs=JOBIILI_RESPONSE * 100)
 
         response = self.client.get("/jobs/delete/%s" %
@@ -95,7 +97,7 @@ class ServerTest(unittest.TestCase):
             {"detail": "Job with id 555555555555555555555555 not found"}, response.json())
 
     def test_confirm_jobs(self):
-        mock_job = self.create_mock_job()
+        mock_job = ServerTest.create_mock_job()
         response = self.client.get("/jobs/confirm/%s" %
                                    mock_job.id, allow_redirects=False)
         self.assertEqual(response.status_code, 307)
@@ -103,7 +105,7 @@ class ServerTest(unittest.TestCase):
         self.assertRegex(response.headers["location"], "^/#data=")
 
     def test_confirm_jobs_already_confirmed(self):
-        mock_job = self.create_mock_job()
+        mock_job = ServerTest.create_mock_job()
         mock_job.update(confirmed=True)
         response = self.client.get("/jobs/confirm/%s" % mock_job.id)
         self.assertEqual(response.status_code, 400)
@@ -118,7 +120,8 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(
             {"detail": "Job with id 555555555555555555555555 not found"}, response.json())
 
-    def create_mock_job(self):
+    @staticmethod
+    def create_mock_job():
         mock_job = JobDocument(email="email@domain.tld", request=JOBIILI_REQUEST,
                                password="password123", user="username", options={})
         mock_job.save()

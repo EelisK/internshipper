@@ -1,8 +1,7 @@
-import requests
 import os
-import datetime
-import bs4
 import json
+import requests
+import bs4
 
 from app.exceptions import UnauthorizedException, ForbiddenException
 from app.adapters import TLSAdapter
@@ -67,12 +66,13 @@ class Client:
     def __invoke_successful_idp_login_callback(self, idp_login_response):
         response = self.session.post(
             BASE_URL + "/Shibboleth.sso/SAML2/POST",
-            data=self.__parse_sso_login_data(idp_login_response)
+            data=Client.__parse_sso_login_data(idp_login_response)
         )
         response.raise_for_status()
         return response
 
-    def __parse_sso_login_data(self, idp_login_response):
+    @staticmethod
+    def __parse_sso_login_data(idp_login_response):
         soup = bs4.BeautifulSoup(idp_login_response.text, "lxml")
         form = soup.find("form")
         return {

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fca1962c9f05cbcf6f91b15bf868c001038f17226c3ac3609abd72b29f7b497a"
+            "sha256": "36327ed95367c4c34fcfe70af8aa90423c02cc9e6af9d2f1afe4e452cf03994d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -639,6 +639,20 @@
             ],
             "index": "pypi",
             "version": "==2.6.0"
+        },
+        "pylint-mongoengine": {
+            "hashes": [
+                "sha256:328577c30460ddfe3ef4b95f98f2855b5503063c02b77efcf7f36676f20a1176"
+            ],
+            "index": "pypi",
+            "version": "==0.4.0"
+        },
+        "pylint-plugin-utils": {
+            "hashes": [
+                "sha256:2f30510e1c46edf268d3a195b2849bd98a1b9433229bb2ba63b8d776e1fc4d0a",
+                "sha256:57625dcca20140f43731311cd8fd879318bf45a8b0fd17020717a8781714a25a"
+            ],
+            "version": "==0.6"
         },
         "rope": {
             "hashes": [

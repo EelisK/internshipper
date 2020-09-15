@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Props, StateOverlayWrapper, StateOverlay } from "./StateOverlay";
+import { Props, StateOverlay } from "./StateOverlay";
 import { shallow } from "enzyme";
 import { Box, Text } from "grommet";
 

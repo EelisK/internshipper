@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Box, Layer } from "grommet";
+import { Box, Layer, Footer, Anchor } from "grommet";
+import { Github } from "grommet-icons";
 import { InternshipForm } from "../../InternshipForm";
 import {
   useRedirectResponseData,
@@ -9,6 +10,8 @@ import {
 import { RedirectResponseDataDetails } from "../../RedirectResponseDataDetails";
 import { StateOverlay } from "../../StateOverlay";
 import { StyledMain } from "./styles";
+
+const GITHUB_SOURCE_LINK = "https://github.com/EelisK/internshipper";
 
 export const JobsPage: React.FC = () => {
   const data = useRedirectResponseData();
@@ -38,6 +41,19 @@ export const JobsPage: React.FC = () => {
           </StateOverlay>
         </Box>
       </StyledMain>
+      <Footer justify="center">
+        <Box justify="center" pad="small" direction="row">
+          <Box>
+            <Anchor
+              icon={<Github />}
+              href={GITHUB_SOURCE_LINK}
+              target="_blank"
+              label="View my source"
+              color="placeholder"
+            />
+          </Box>
+        </Box>
+      </Footer>
     </RequestStateContext.Provider>
   );
 };

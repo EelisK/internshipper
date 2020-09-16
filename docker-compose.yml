@@ -79,7 +79,7 @@ services:
     depends_on:
       - rabbitmq-test
       - mongodb-test
-    command: ["pipenv", "run", "test"]
+    command: ["python", "-m", "unittest", "discover", "./spec"]
 
   lint-server:
     <<: *server

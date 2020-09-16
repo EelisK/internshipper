@@ -32,4 +32,3 @@ python_version = "3.8"
 
 [scripts]
 lint = "bash -c \"./scripts/run_linter.sh\""
-test = "python -m unittest discover ./spec"

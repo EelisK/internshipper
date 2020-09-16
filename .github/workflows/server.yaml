@@ -30,7 +30,7 @@ jobs:
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push' && !contains(github.event.issue.labels.*.name, 'norelease')
     steps:
       - uses: actions/checkout@v2
       - name: Configure AWS Credentials

@@ -29,7 +29,7 @@ export const InternshipForm: React.FC<Props> = (props) => {
     { name: "jobiiliToggles", start: [1, 1], end: [1, 1] },
   ];
   const gridColumns = ["flex", "flex"];
-  const gridRows = ["medium", "small"];
+  const gridRows = ["flex", "small"];
   const RequestContainer = isMobileView ? Box : Grid;
   const requestContainerProps = isMobileView
     ? {}

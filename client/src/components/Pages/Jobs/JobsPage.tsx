@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Main, Box, Layer } from "grommet";
+import { Box, Layer, Footer, Anchor } from "grommet";
+import { Github } from "grommet-icons";
 import { InternshipForm } from "../../InternshipForm";
 import {
   useRedirectResponseData,
@@ -8,6 +9,9 @@ import {
 } from "../../../providers";
 import { RedirectResponseDataDetails } from "../../RedirectResponseDataDetails";
 import { StateOverlay } from "../../StateOverlay";
+import { StyledMain } from "./styles";
+
+const GITHUB_SOURCE_LINK = "https://github.com/EelisK/internshipper";
 
 export const JobsPage: React.FC = () => {
   const data = useRedirectResponseData();
@@ -22,7 +26,7 @@ export const JobsPage: React.FC = () => {
     <RequestStateContext.Provider
       value={{ state: requestState, setState: setRequestState }}
     >
-      <Main align="center" pad="large">
+      <StyledMain align="center" pad="large">
         <Box pad="medium" elevation="medium" style={{ minHeight: "auto" }}>
           {isDetailsLayerVisible && data && (
             <Layer onClickOutside={() => setIsDetailsLayerVisible(false)}>
@@ -36,7 +40,20 @@ export const JobsPage: React.FC = () => {
             <InternshipForm />
           </StateOverlay>
         </Box>
-      </Main>
+      </StyledMain>
+      <Footer justify="center">
+        <Box justify="center" pad="small" direction="row">
+          <Box>
+            <Anchor
+              icon={<Github />}
+              href={GITHUB_SOURCE_LINK}
+              target="_blank"
+              label="View my source"
+              color="placeholder"
+            />
+          </Box>
+        </Box>
+      </Footer>
     </RequestStateContext.Provider>
   );
 };

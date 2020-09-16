@@ -45,22 +45,27 @@ describe("<JobiiliRequest />", () => {
     );
     expect(component.find(FormField).at(0).find(MultiSelect).length).toBe(1);
   });
-  // TODO:
+
   it("should render a required MultiSelect for degree title", () => {
     const component = shallow(<JobiiliRequest {...getProps()} />);
     expect(component.find(FormField).at(1).prop("label")).toEqual(
       "Degree titles"
     );
     expect(component.find(FormField).at(1).find(MultiSelect).length).toBe(1);
+    expect(component.find(FormField).at(1).prop("validate")).toBeInstanceOf(
+      Function
+    );
   });
 
-  // TODO:
   it("should render a required MultiSelect for practice classification", () => {
     const component = shallow(<JobiiliRequest {...getProps()} />);
     expect(component.find(FormField).at(2).prop("label")).toEqual(
       "Practice classification"
     );
     expect(component.find(FormField).at(2).find(MultiSelect).length).toBe(1);
+    expect(component.find(FormField).at(2).prop("validate")).toBeInstanceOf(
+      Function
+    );
   });
 
   describe("when selecting meta practice classifications", () => {

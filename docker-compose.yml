@@ -79,11 +79,11 @@ services:
     depends_on:
       - rabbitmq-test
       - mongodb-test
-    command: ["python", "-m", "unittest", "discover", "./spec"]
+    command: ["pipenv", "run", "test"]
 
   lint-server:
     <<: *server
-    command: bash -c "./scripts/run_linter.sh"
+    command: ["pipenv", "run", "lint"]
 
   mongodb-test:
     image: mongo:4.2

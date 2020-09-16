@@ -1,0 +1,651 @@
+[
+  {
+    "id": 34036,
+    "authorId": 5031,
+    "endDate": "2020-12-27T12:00:00.000Z",
+    "minPeriod": 1,
+    "organizationId": 2476,
+    "startDate": "2020-06-01T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": null,
+    "primarySchools": [
+      {
+        "id": 1086,
+        "name": "Kajaanin Ammattikorkeakoulu Oy",
+        "nameSwe": null,
+        "abbreviation": "KAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Kainuun sosiaali- ja terveydenhuollon kuntayhtymä - Sotkamon vastaanotto",
+    "orgAbbreviation": null,
+    "jobWeeks": "3",
+    "totalStudents": "4",
+    "availability": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34040,
+    "authorId": 14262,
+    "endDate": "2020-12-27T12:00:00.000Z",
+    "minPeriod": 1,
+    "organizationId": 2457,
+    "startDate": "2020-08-31T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": null,
+    "primarySchools": [
+      {
+        "id": 1086,
+        "name": "Kajaanin Ammattikorkeakoulu Oy",
+        "nameSwe": null,
+        "abbreviation": "KAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Kainuun sosiaali- ja terveydenhuollon kuntayhtymä - Kuhmon terveyskeskussairaala",
+    "orgAbbreviation": null,
+    "jobWeeks": "17",
+    "totalStudents": "0",
+    "availability": [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34042,
+    "authorId": 38733,
+    "endDate": "2020-08-30T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 2480,
+    "startDate": "2020-06-01T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 2,
+    "primarySchools": [
+      {
+        "id": 1086,
+        "name": "Kajaanin Ammattikorkeakoulu Oy",
+        "nameSwe": null,
+        "abbreviation": "KAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": true,
+    "orgName": "Kainuun sosiaali- ja terveydenhuollon kuntayhtymä - Päivystysalue",
+    "orgAbbreviation": null,
+    "jobWeeks": "1",
+    "totalStudents": "1",
+    "availability": [2],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34176,
+    "authorId": 11771,
+    "endDate": "2020-12-20T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 7940,
+    "startDate": "2020-08-24T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 10,
+    "primarySchools": [
+      {
+        "id": 1077,
+        "name": "Kaakkois-Suomen ammattikorkeakoulu",
+        "nameSwe": "Kaakkois-Suomen ammattikorkeakoulu",
+        "abbreviation": "XAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Kymenlaakson sosiaali-ja terveyspalvelujen kuntayhtymä - Kymsote, Kymenlaakson keskussairaala, Päivystysosasto D322B",
+    "orgAbbreviation": null,
+    "jobWeeks": "5",
+    "totalStudents": "9",
+    "availability": [2, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34187,
+    "authorId": 48357,
+    "endDate": "2020-10-04T12:00:00.000Z",
+    "minPeriod": 5,
+    "organizationId": 1232,
+    "startDate": "2020-08-24T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": null,
+    "primarySchools": [
+      {
+        "id": 1088,
+        "name": "LAB-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "LAB-ammattikorkeakoulu"
+      },
+      {
+        "id": 1078,
+        "name": "Lahden ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "LAMK Oy"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": true,
+    "orgName": "Päijät-Hämeen Hyvinvointikuntayhtymä/keskussairaala - Ensihoitopalvelut",
+    "orgAbbreviation": null,
+    "jobWeeks": "0",
+    "totalStudents": "5",
+    "availability": [0, 0, 0, 0, 0, 0],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34205,
+    "authorId": 57942,
+    "endDate": "2020-12-27T12:00:00.000Z",
+    "minPeriod": 1,
+    "organizationId": 2459,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 30,
+    "primarySchools": [
+      {
+        "id": 1086,
+        "name": "Kajaanin Ammattikorkeakoulu Oy",
+        "nameSwe": null,
+        "abbreviation": "KAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Kainuun sosiaali- ja terveydenhuollon kuntayhtymä - Suomussalmen terveyskeskussairaala",
+    "orgAbbreviation": null,
+    "jobWeeks": "18",
+    "totalStudents": "8",
+    "availability": [1, 1, 1, 3, 1, 1, 2, 1, 3, 3, 2, 1, 1, 2, 3, 3, 3, 4],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34309,
+    "authorId": 3390,
+    "endDate": "2021-01-03T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 3359,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 4,
+    "primarySchools": [
+      {
+        "id": 1079,
+        "name": "Karelia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Karelia"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Siun sote - Pohjois-Karjalan sosiaali- ja terveyspalvelujen kuntayhtymä - Terveyskeskussairaala (Liperi)",
+    "orgAbbreviation": null,
+    "jobWeeks": "15",
+    "totalStudents": "4",
+    "availability": [2, 1, 1, 1, 1, 2, 2, 0, 0, 0, 0, 2, 2, 1, 1, 1, 1, 2, 2],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34333,
+    "authorId": 690,
+    "endDate": "2020-12-27T12:00:00.000Z",
+    "minPeriod": 3,
+    "organizationId": 2280,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 2,
+    "primarySchools": [
+      {
+        "id": 1084,
+        "name": "Savonia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Savonia"
+      }
+    ],
+    "jobName": "MODUULI: valinnainen harj.",
+    "advancedStudentsOnly": true,
+    "orgName": "Kuopion yliopistollinen sairaala - KYS - Vastasyntyneiden teho-osasto 2406",
+    "orgAbbreviation": "2406",
+    "jobWeeks": "0",
+    "totalStudents": "2",
+    "availability": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34341,
+    "authorId": 9712,
+    "endDate": "2021-01-03T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 3337,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 2,
+    "primarySchools": [
+      {
+        "id": 1079,
+        "name": "Karelia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Karelia"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": false,
+    "orgName": "Siun sote - Pohjois-Karjalan sosiaali- ja terveyspalvelujen kuntayhtymä - Terveysasema (Ilomantsi)",
+    "orgAbbreviation": null,
+    "jobWeeks": "18",
+    "totalStudents": "2",
+    "availability": [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34365,
+    "authorId": 32172,
+    "endDate": "2021-01-03T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 3346,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 4,
+    "primarySchools": [
+      {
+        "id": 1079,
+        "name": "Karelia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Karelia"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Siun sote - Pohjois-Karjalan sosiaali- ja terveyspalvelujen kuntayhtymä - Terveysasema (Juuka)",
+    "orgAbbreviation": null,
+    "jobWeeks": "9",
+    "totalStudents": "1",
+    "availability": [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34372,
+    "authorId": 47898,
+    "endDate": "2021-01-10T12:00:00.000Z",
+    "minPeriod": 3,
+    "organizationId": 8018,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": null,
+    "primarySchools": [
+      {
+        "id": 1080,
+        "name": "Jyväskylän ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "JAMK"
+      },
+      {
+        "id": 1094,
+        "name": "Hämeen ammattikorkeakoulu OY",
+        "nameSwe": null,
+        "abbreviation": "HAMK"
+      },
+      {
+        "id": 1095,
+        "name": "Tampereen ammattikorkeakoulu Oy",
+        "nameSwe": null,
+        "abbreviation": "TAMK"
+      },
+      {
+        "id": 1100,
+        "name": "Seinäjoen ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "SeAMK"
+      }
+    ],
+    "jobName": "Terveyskeskussairaala",
+    "advancedStudentsOnly": null,
+    "orgName": "Pihlajalinna-konserni - Mäntänvuoren Terveys Oy",
+    "orgAbbreviation": null,
+    "jobWeeks": "12",
+    "totalStudents": "6",
+    "availability": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2
+    ],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34379,
+    "authorId": 56507,
+    "endDate": "2020-12-13T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 2436,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": null,
+    "primarySchools": [
+      {
+        "id": 1086,
+        "name": "Kajaanin Ammattikorkeakoulu Oy",
+        "nameSwe": null,
+        "abbreviation": "KAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Kainuun sosiaali- ja terveydenhuollon kuntayhtymä - Kotihoito Kajaani",
+    "orgAbbreviation": null,
+    "jobWeeks": "3",
+    "totalStudents": "15",
+    "availability": [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34405,
+    "authorId": 11829,
+    "endDate": "2021-01-03T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 3352,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 6,
+    "primarySchools": [
+      {
+        "id": 1079,
+        "name": "Karelia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Karelia"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Siun sote - Pohjois-Karjalan sosiaali- ja terveyspalvelujen kuntayhtymä - Terveyskeskussairaala (Ilomantsi)",
+    "orgAbbreviation": null,
+    "jobWeeks": "15",
+    "totalStudents": "2",
+    "availability": [1, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34450,
+    "authorId": 29725,
+    "endDate": "2020-12-20T12:00:00.000Z",
+    "minPeriod": 3,
+    "organizationId": 4372,
+    "startDate": "2020-08-31T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 2,
+    "primarySchools": [
+      {
+        "id": 1092,
+        "name": "Metropolia ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Metropolia amk"
+      },
+      {
+        "id": 1093,
+        "name": "Laurea-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Laurea"
+      },
+      {
+        "id": 1094,
+        "name": "Hämeen ammattikorkeakoulu OY",
+        "nameSwe": null,
+        "abbreviation": "HAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Perusturvakuntayhtymä Karviainen - Karkkilan terveysasema",
+    "orgAbbreviation": null,
+    "jobWeeks": "10",
+    "totalStudents": "2",
+    "availability": [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34544,
+    "authorId": 37822,
+    "endDate": "2020-12-20T12:00:00.000Z",
+    "minPeriod": 3,
+    "organizationId": 3203,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 6,
+    "primarySchools": [
+      {
+        "id": 1084,
+        "name": "Savonia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Savonia"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Kuopion kaupunki, sairaalapalvelut (Harjulan sairaala) - Karttulan sairaalan osasto",
+    "orgAbbreviation": "KVO",
+    "jobWeeks": "4",
+    "totalStudents": "6",
+    "availability": [2, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34545,
+    "authorId": 337,
+    "endDate": "2020-12-20T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 1160,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": null,
+    "primarySchools": [
+      {
+        "id": 1087,
+        "name": "Yrkeshögskolan Novia",
+        "nameSwe": "Yrkeshögskolan Novia",
+        "abbreviation": "Novia"
+      },
+      {
+        "id": 1091,
+        "name": "Turun ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "TUAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": true,
+    "orgName": "Varsinais-Suomen sairaanhoitopiiri - Tyks, Sydäntoimenpideosasto",
+    "orgAbbreviation": "TC3",
+    "jobWeeks": "5",
+    "totalStudents": "3",
+    "availability": [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34546,
+    "authorId": 13720,
+    "endDate": "2020-12-20T12:00:00.000Z",
+    "minPeriod": 1,
+    "organizationId": 7052,
+    "startDate": "2020-08-31T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 1,
+    "primarySchools": [
+      {
+        "id": 1082,
+        "name": "Diakonia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "DIAK"
+      },
+      {
+        "id": 1085,
+        "name": "Satakunnan ammattikorkeakoulu Oy",
+        "nameSwe": null,
+        "abbreviation": "SAMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Säkylän kunta, sosiaali- ja terveyspalvelut - Lääkärin vastaanotto",
+    "orgAbbreviation": null,
+    "jobWeeks": "11",
+    "totalStudents": "1",
+    "availability": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34550,
+    "authorId": 29091,
+    "endDate": "2020-12-20T12:00:00.000Z",
+    "minPeriod": 4,
+    "organizationId": 8673,
+    "startDate": "2020-09-07T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 4,
+    "primarySchools": [
+      {
+        "id": 1083,
+        "name": "Centria-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Centria-AMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": null,
+    "orgName": "Soite /Keski-Pohjanmaan sosiaali- ja terveyspalvelukuntayhtymä - Soite/ Kuntoutus ja neurologia / Neurologian ja vaativan kuntoutuksen osasto (NEKU)",
+    "orgAbbreviation": null,
+    "jobWeeks": "10",
+    "totalStudents": "4",
+    "availability": [4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34569,
+    "authorId": 44718,
+    "endDate": "2021-01-03T12:00:00.000Z",
+    "minPeriod": 10,
+    "organizationId": 3004,
+    "startDate": "2020-08-03T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": 3,
+    "primarySchools": [
+      {
+        "id": 1079,
+        "name": "Karelia-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Karelia"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": true,
+    "orgName": "Siun sote - Pohjois-Karjalan sosiaali- ja terveyspalvelujen kuntayhtymä - Kotisairaala (Joensuun kantakaupunki)",
+    "orgAbbreviation": null,
+    "jobWeeks": "19",
+    "totalStudents": "1",
+    "availability": [3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  },
+  {
+    "id": 34653,
+    "authorId": 41347,
+    "endDate": "2020-12-27T12:00:00.000Z",
+    "minPeriod": 3,
+    "organizationId": 9056,
+    "startDate": "2020-08-17T12:00:00.000Z",
+    "status": "published",
+    "maxTotalPersons": null,
+    "primarySchools": [
+      {
+        "id": 1083,
+        "name": "Centria-ammattikorkeakoulu",
+        "nameSwe": null,
+        "abbreviation": "Centria-AMK"
+      }
+    ],
+    "jobName": null,
+    "advancedStudentsOnly": false,
+    "orgName": "Soite /Keski-Pohjanmaan sosiaali- ja terveyspalvelukuntayhtymä - Soite / Päivystys ja sairaanhoidolliset palvelut / Päivystysosasto",
+    "orgAbbreviation": null,
+    "jobWeeks": "11",
+    "totalStudents": "10",
+    "availability": [4, 4, 4, 2, 2, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 1, 4, 4],
+    "publicationDate": "2020-03-24T10:00:00.000Z",
+    "publicationDate2": "2020-04-20T06:00:00.000Z",
+    "publicationEndDate": "2020-12-31T21:59:00.000Z",
+    "total": "396"
+  }
+]

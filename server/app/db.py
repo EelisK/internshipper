@@ -49,17 +49,18 @@ class Job(mongoengine.Document):
         return dict_value
 
     @staticmethod
-    def get_by_id(id: str):
-        return Job.objects.get(id=id)
+    def get_by_id(job_id: str):
+        return Job.objects.get(id=job_id)
 
     def __format_request(self):
         with open('./app/request_schema.json', 'r') as schema:
             schema = json.loads(''.join(schema.readlines()))
-            self.__extend_with_default(Draft4Validator)(
+            Job.__extend_with_default(Draft4Validator)(
                 schema).validate(self.request)
             return self.request
 
-    def __extend_with_default(self, validator_class):
+    @staticmethod
+    def __extend_with_default(validator_class):
         validate_properties = validator_class.VALIDATORS['properties']
 
         def set_defaults(validator, properties, instance, schema):

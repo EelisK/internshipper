@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import patch
-from app.db import Job as JobDocument
 from mocks import JOBIILI_REQUEST, JOBIILI_RESPONSE
+
+from app.db import Job as JobDocument
 from lib import tasks
 
 
@@ -10,7 +11,7 @@ class TasksTest(unittest.TestCase):
     @patch('app.jobiili.Client.get_jobs')
     def test_perform_job_polling_no_new_jobs(self, mock_get_jobs, mock_login):
         mock_get_jobs.return_value = []
-        mock_job = self.create_mock_job()
+        mock_job = TasksTest.create_mock_job()
 
         tasks.perform_job_polling(mock_job.to_dict())
 
@@ -23,7 +24,7 @@ class TasksTest(unittest.TestCase):
     @patch('mailers.sender.Sender.send_email')
     def test_perform_job_polling_new_jobs_found(self, mock_send_email, mock_get_jobs, mock_login):
         mock_get_jobs.return_value = JOBIILI_RESPONSE
-        mock_job = self.create_mock_job()
+        mock_job = TasksTest.create_mock_job()
 
         tasks.perform_job_polling(mock_job.to_dict())
 
@@ -49,7 +50,7 @@ class TasksTest(unittest.TestCase):
     @patch('mailers.sender.Sender.send_email')
     def test_perform_job_polling_new_jobs_exclude_advanced_students(self, mock_send_email, mock_get_jobs, mock_login):
         mock_get_jobs.return_value = JOBIILI_RESPONSE
-        mock_job = self.create_mock_job(
+        mock_job = TasksTest.create_mock_job(
             options={"exclude_advanced_students": True})
 
         tasks.perform_job_polling(mock_job.to_dict())
@@ -73,8 +74,8 @@ class TasksTest(unittest.TestCase):
     @patch('lib.tasks.perform_job_polling.s')
     @patch('app.db.Job.objects')
     def test_perform_bulk_job_polling(self, mock_objects, mock_perform_job_polling):
-        mock_job_1 = self.create_mock_job(confirmed=True)
-        mock_job_2 = self.create_mock_job(confirmed=True)
+        mock_job_1 = TasksTest.create_mock_job(confirmed=True)
+        mock_job_2 = TasksTest.create_mock_job(confirmed=True)
         mock_objects.return_value = [mock_job_1, mock_job_2]
 
         tasks.perform_bulk_job_polling()
@@ -82,7 +83,8 @@ class TasksTest(unittest.TestCase):
         self.assertEqual(mock_objects.call_count, 1)
         self.assertEqual(mock_perform_job_polling.call_count, 2)
 
-    def create_mock_job(self, **options):
+    @staticmethod
+    def create_mock_job(**options):
         mock_job = JobDocument(
             email=options.get("email", "email@domain.tld"),
             request=options.get("request", JOBIILI_REQUEST),

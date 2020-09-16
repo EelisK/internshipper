@@ -1,9 +1,9 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from fastapi.testclient import TestClient
 from mailers.sender import Sender
 
 
+# pylint: disable=unused-argument
 def create_mock_client(*args, **kwargs):
     class MockClient:
         def send_email(self, *args, **kwargs):
@@ -19,7 +19,7 @@ class SenderTest(unittest.TestCase):
         rendered_template = sender.create_html_email_from_template(
             confirmation_url="http://foo.bar/confirm")
         self.assertIsNotNone(rendered_template)
-        self.assertTrue(type(rendered_template) == str)
+        self.assertTrue(isinstance(rendered_template, str))
         self.assertIn("http://foo.bar/confirm", rendered_template)
 
     def test_create_plaintext_email_from_template(self):
@@ -28,7 +28,7 @@ class SenderTest(unittest.TestCase):
             confirmation_url="http://foo.bar/confirm")
 
         self.assertIsNotNone(rendered_text)
-        self.assertTrue(type(rendered_text) == str)
+        self.assertTrue(isinstance(rendered_text, str))
         self.assertIn("http://foo.bar/confirm", rendered_text)
 
     @patch('boto3.client', create_mock_client)

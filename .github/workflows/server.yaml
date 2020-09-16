@@ -12,8 +12,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests using docker-compose
-        run: docker-compose up --build test-server
+      - name: Build container
+        run: docker-compose build test-server
+      - name: Run test container
+        run: docker-compose run test-server
+
+  lint:
+    name: Run linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build container
+        run: docker-compose build lint-server
+      - name: Run lint container
+        run: docker-compose run lint-server
 
   deploy:
     name: Deploy to EC2

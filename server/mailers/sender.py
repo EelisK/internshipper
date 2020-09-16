@@ -1,15 +1,9 @@
-from app import db
-from app import crypto
-from app import jobiili
-from fastapi.templating import Jinja2Templates
-
-import html2text
-import datetime
-import requests
 import logging
-
-from botocore.exceptions import ClientError
+import html2text
 import boto3
+
+from fastapi.templating import Jinja2Templates
+from botocore.exceptions import ClientError
 
 
 class Sender:
@@ -52,7 +46,7 @@ class Sender:
                 # If you are not using a configuration set, comment or delete the following line
                 # ConfigurationSetName="ConfigSet",
             )
-            logging.info("Email sent (id: {})".format(response['MessageId']))
-        except ClientError as e:
-            logging.error(e.response)
-            logging.error(e.response['Error']['Message'])
+            logging.info("Email sent (id: %s)", response['MessageId'])
+        except ClientError as ses_exception:
+            logging.error(ses_exception.response)
+            logging.error(ses_exception.response['Error']['Message'])

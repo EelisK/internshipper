@@ -81,6 +81,10 @@ services:
       - mongodb-test
     command: ["python", "-m", "unittest", "discover", "./spec"]
 
+  lint-server:
+    <<: *server
+    command: ["pipenv", "run", "lint"]
+
   mongodb-test:
     image: mongo:4.2
     restart: always

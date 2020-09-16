@@ -7,6 +7,7 @@ verify_ssl = true
 pylint = "*"
 autopep8 = "*"
 rope = "*"
+pylint-mongoengine = "*"
 
 [packages]
 requests = "*"
@@ -24,8 +25,10 @@ jinja2 = "*"
 html2text = "*"
 celery = "*"
 dnspython = "*"
-blinker = "*"
 pymongo = {extras = ["srv"], version = "*"}
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+lint = "bash -c \"./scripts/run_linter.sh\""

@@ -5,8 +5,9 @@ WORKDIR /srv/app
 COPY Pipfile Pipfile.lock ./
 
 RUN python -m pip install --upgrade pip
+RUN pip install pylint pylint_mongoengine
 RUN pip install pipenv
-RUN pipenv install --system --deploy --ignore-pipfile
+RUN pipenv install --system --ignore-pipfile
 
 EXPOSE ${PORT}
 

@@ -1,10 +1,12 @@
+# pylint: disable=wrong-import-order,unused-import
 import lib.environment
+import json
+import base64
+import logging
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from botocore.exceptions import ClientError
 from mongoengine.errors import DoesNotExist
-from typing import Iterable
 
 from lib.config import INTERNSHIPPER_APP_URL
 from app.exceptions import BadRequestException, NotFoundException
@@ -12,12 +14,6 @@ from app.jobiili import Client as JobiiliClient
 from app.models import CreateJob
 from app.db import Job as JobDocument
 from mailers.sender import Sender as EmailSender
-
-import mongoengine
-import logging
-import base64
-import json
-import os
 
 
 app = FastAPI()
@@ -46,10 +42,11 @@ def register(job: CreateJob):
             template_params=template_params
         )
         return {"success": True, "identity": client.identity}
-    except Exception as e:
+    except Exception as exception:
         logging.error("Exception in job creation")
-        logging.error(e)
-        raise BadRequestException("Jobiili request was likely malformed")
+        logging.error(exception)
+        raise BadRequestException(
+            "Jobiili request was likely malformed") from exception
 
 
 @app.get("/jobs/delete/{job_id}", status_code=201)
@@ -82,15 +79,15 @@ def confirm_job(job_id: str):
             "action": "CONFIRM_JOB",
             "payload": document.to_dict(remove_sensitive_data=True, minimize=True)
         }))
-    else:
-        raise BadRequestException("Subscription already confirmed")
+    raise BadRequestException("Subscription already confirmed")
 
 
-def __try_find_document(id: str):
+def __try_find_document(job_id: str):
     try:
-        return JobDocument.get_by_id(id)
-    except DoesNotExist:
-        raise NotFoundException("Job with id %s not found" % id)
+        return JobDocument.get_by_id(job_id)
+    except DoesNotExist as mongo_exception:
+        raise NotFoundException("Job with id %s not found" %
+                                job_id) from mongo_exception
 
 
 def __generate_confirmation_url(job: JobDocument):

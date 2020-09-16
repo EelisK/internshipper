@@ -1,5 +1,5 @@
+from typing import Any, Dict, Optional
 from fastapi import HTTPException
-from typing import Any, Dict, Optional, Sequence
 
 
 class UnauthorizedException(HTTPException):

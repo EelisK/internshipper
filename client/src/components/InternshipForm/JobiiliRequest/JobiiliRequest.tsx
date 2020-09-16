@@ -68,6 +68,7 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
   }
 
   private renderDegreeRelatedFields() {
+    const jobClassesWithMetaValues = this.jobClassesWithMetaValues;
     return (
       <Box gridArea="profession">
         <FormField label="Guidance languages">
@@ -81,7 +82,17 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             setValues={(languages) => this.partialUpdateRequest({ languages })}
           />
         </FormField>
-        <FormField label="Degree titles">
+        <FormField
+          label="Degree titles"
+          name="jobTargetDegrees"
+          validate={() => {
+            if (this.props.request.jobTargetDegrees.length === 0)
+              return {
+                message: "No degree title selected",
+                status: "error",
+              };
+          }}
+        >
           <MultiSelect<JobiiliDegreeTitle>
             labelKey="name"
             valueKey="name"
@@ -93,13 +104,23 @@ export class JobiiliRequest extends React.PureComponent<Props, State> {
             }
           />
         </FormField>
-        <FormField label="Practice classification">
+        <FormField
+          label="Practice classification"
+          name="jobClasses"
+          validate={() => {
+            if (jobClassesWithMetaValues.length === 0)
+              return {
+                message: "You must select at leats one pratice classification",
+                status: "error",
+              };
+          }}
+        >
           <MultiSelect<JobiiliDegreeTitle>
             labelKey="name"
             valueKey="name"
             icon={<Workshop />}
             options={AVAILABLE_PRACTICE_CLASSIFICATIONS}
-            values={this.jobClassesWithMetaValues}
+            values={jobClassesWithMetaValues}
             setValues={(jobClasses) =>
               this.partialUpdateRequest({ jobClasses })
             }

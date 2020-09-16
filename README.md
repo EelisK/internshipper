@@ -1,5 +1,8 @@
 # internshipper
 
+![Client](https://github.com/EelisK/internshipper/workflows/Client/badge.svg)
+![Server](https://github.com/EelisK/internshipper/workflows/Server/badge.svg)
+
 ## Overview 👩‍🔬
 
 ### Why

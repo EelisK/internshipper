@@ -15,7 +15,7 @@
     "date-fns": "^2.16.1",
     "grommet": "^2.15.0",
     "grommet-icons": "^4.4.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1"
